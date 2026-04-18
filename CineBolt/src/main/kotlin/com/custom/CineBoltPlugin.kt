@@ -8,5 +8,6 @@ import android.content.Context
 class CineBoltPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(CineBoltProvider())
+        registerExtractorAPI(Vidlink())
     }
 }

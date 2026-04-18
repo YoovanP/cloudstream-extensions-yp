@@ -8,5 +8,6 @@ import android.content.Context
 class PStreamPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(PStreamProvider())
+        registerExtractorAPI(Vidlink())
     }
 }

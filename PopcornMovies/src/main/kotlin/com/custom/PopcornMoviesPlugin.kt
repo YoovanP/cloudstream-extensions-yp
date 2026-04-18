@@ -8,5 +8,6 @@ import android.content.Context
 class PopcornMoviesPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(PopcornMoviesProvider())
+        registerExtractorAPI(Vidlink())
     }
 }

@@ -8,5 +8,6 @@ import android.content.Context
 class IceFYPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(IceFYProvider())
+        registerExtractorAPI(Vidlink())
     }
 }

@@ -8,5 +8,6 @@ import android.content.Context
 class CinebyPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(CinebyProvider())
+        registerExtractorAPI(Vidlink())
     }
 }

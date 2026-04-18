@@ -2,7 +2,6 @@ package com.custom
 
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
-import android.util.Log
 
 class AnixtvProvider : MainAPI() {
     override var mainUrl = "https://anixtv.us.cc"
@@ -18,9 +17,6 @@ class AnixtvProvider : MainAPI() {
         private const val TMDB_KEY = "17f7b9d5b48c5446e781e13bfa980f61"
         private const val IMG_BASE = "https://image.tmdb.org/t/p/w500"
         private const val IMG_ORIG = "https://image.tmdb.org/t/p/original"
-
-        private const val VIDLINK_API = "https://vidlink.pro"
-        private const val DECRYPT_API = "https://multidecrypt.megix.workers.dev"
 
         private val EMBED_MOVIE: List<(Int) -> String> = listOf(
             { id -> "https://vidlink.pro/movie/$id" },
@@ -67,8 +63,6 @@ class AnixtvProvider : MainAPI() {
         val genres: List<TmdbGenre>?,
         val seasons: List<TmdbSeason>?,
     )
-    data class VidlinkResponse(val stream: VidlinkStream)
-    data class VidlinkStream(val playlist: String)
 
     // ─── Helpers ─────────────────────────────────────────────────────
 
@@ -188,14 +182,6 @@ class AnixtvProvider : MainAPI() {
         val s      = parts.getOrNull(1)?.toIntOrNull()
         val e      = parts.getOrNull(2)?.toIntOrNull()
 
-        // 1. Try Vidlink v2 (Modern API with Decryption)
-        try {
-            invokeVidlink(tmdbId, s, e, subtitleCallback, callback)
-        } catch (ex: Exception) {
-            Log.e("Anixtv", "Vidlink failed: ${ex.message}")
-        }
-
-        // 2. Try Standard Extractors
         if (s == null) {
             EMBED_MOVIE.amap { fn ->
                 try {
@@ -212,39 +198,5 @@ class AnixtvProvider : MainAPI() {
             }
         }
         return true
-    }
-
-    private suspend fun invokeVidlink(
-        tmdbId: Int,
-        season: Int?,
-        episode: Int?,
-        subtitleCallback: (SubtitleFile) -> Unit,
-        callback: (ExtractorLink) -> Unit
-    ) {
-        val encUrl = "${DECRYPT_API}/enc-vidlink?text=${tmdbId}"
-        val encRes = app.get(encUrl).text
-        val encData = org.json.JSONObject(encRes).getString("result")
-
-        val headers = mapOf(
-            "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "Referer" to "${VIDLINK_API}/",
-            "Origin" to VIDLINK_API
-        )
-
-        val apiPath = if (season == null) "movie" else "tv"
-        val epUrl = if (season == null)
-            "${VIDLINK_API}/api/b/${apiPath}/${encData}"
-        else
-            "${VIDLINK_API}/api/b/${apiPath}/${encData}/${season}/${episode}"
-
-        val response = app.get(epUrl, headers = headers).text
-        val data = com.lagradost.cloudstream3.utils.AppUtils.parseJson<VidlinkResponse>(response)
-
-        com.lagradost.cloudstream3.utils.M3u8Helper.generateM3u8(
-            "Vidlink",
-            data.stream.playlist,
-            "${VIDLINK_API}/",
-            headers = headers
-        ).forEach(callback)
     }
 }

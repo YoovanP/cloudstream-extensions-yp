@@ -8,5 +8,6 @@ import android.content.Context
 class CinemaOSPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(CinemaOSProvider())
+        registerExtractorAPI(Vidlink())
     }
 }

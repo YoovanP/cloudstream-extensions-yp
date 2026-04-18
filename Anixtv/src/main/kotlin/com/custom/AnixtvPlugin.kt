@@ -8,5 +8,6 @@ import android.content.Context
 class AnixtvPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(AnixtvProvider())
+        registerExtractorAPI(Vidlink())
     }
 }

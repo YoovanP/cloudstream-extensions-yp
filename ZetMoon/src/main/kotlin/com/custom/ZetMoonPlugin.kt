@@ -8,5 +8,6 @@ import android.content.Context
 class ZetMoonPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(ZetMoonProvider())
+        registerExtractorAPI(Vidlink())
     }
 }

@@ -8,5 +8,6 @@ import android.content.Context
 class ShuttleTVPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(ShuttleTVProvider())
+        registerExtractorAPI(Vidlink())
     }
 }

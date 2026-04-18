@@ -8,5 +8,6 @@ import android.content.Context
 class FilmyTimePlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(FilmyTimeProvider())
+        registerExtractorAPI(Vidlink())
     }
 }

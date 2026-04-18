@@ -8,5 +8,6 @@ import android.content.Context
 class NexVidPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(NexVidProvider())
+        registerExtractorAPI(Vidlink())
     }
 }

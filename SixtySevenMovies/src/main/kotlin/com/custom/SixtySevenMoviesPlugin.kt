@@ -8,5 +8,6 @@ import android.content.Context
 class SixtySevenMoviesPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(SixtySevenMoviesProvider())
+        registerExtractorAPI(Vidlink())
     }
 }

@@ -8,5 +8,6 @@ import android.content.Context
 class DuloTVPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(DuloTVProvider())
+        registerExtractorAPI(Vidlink())
     }
 }

@@ -8,5 +8,6 @@ import android.content.Context
 class FlyXPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(FlyXProvider())
+        registerExtractorAPI(Vidlink())
     }
 }

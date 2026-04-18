@@ -8,5 +8,6 @@ import android.content.Context
 class CinegramPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(CinegramProvider())
+        registerExtractorAPI(Vidlink())
     }
 }

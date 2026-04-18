@@ -8,5 +8,6 @@ import android.content.Context
 class RivePlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(RiveProvider())
+        registerExtractorAPI(Vidlink())
     }
 }

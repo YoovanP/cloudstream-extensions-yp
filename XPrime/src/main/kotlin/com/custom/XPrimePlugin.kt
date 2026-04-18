@@ -8,5 +8,6 @@ import android.content.Context
 class XPrimePlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(XPrimeProvider())
+        registerExtractorAPI(Vidlink())
     }
 }

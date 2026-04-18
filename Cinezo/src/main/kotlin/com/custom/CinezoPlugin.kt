@@ -8,5 +8,6 @@ import android.content.Context
 class CinezoPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(CinezoProvider())
+        registerExtractorAPI(Vidlink())
     }
 }

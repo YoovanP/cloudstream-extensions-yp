@@ -8,5 +8,6 @@ import android.content.Context
 class FlickyStreamPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(FlickyStreamProvider())
+        registerExtractorAPI(Vidlink())
     }
 }

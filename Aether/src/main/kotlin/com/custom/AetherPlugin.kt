@@ -8,5 +8,6 @@ import android.content.Context
 class AetherPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(AetherProvider())
+        registerExtractorAPI(Vidlink())
     }
 }

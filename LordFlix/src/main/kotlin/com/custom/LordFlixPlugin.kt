@@ -8,5 +8,6 @@ import android.content.Context
 class LordFlixPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(LordFlixProvider())
+        registerExtractorAPI(Vidlink())
     }
 }

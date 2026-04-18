@@ -8,5 +8,6 @@ import android.content.Context
 class PrimeshowsPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(PrimeshowsProvider())
+        registerExtractorAPI(Vidlink())
     }
 }

@@ -8,5 +8,6 @@ import android.content.Context
 class PoprinkPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(PoprinkProvider())
+        registerExtractorAPI(Vidlink())
     }
 }

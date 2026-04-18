@@ -8,5 +8,6 @@ import android.content.Context
 class FilmexPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(FilmexProvider())
+        registerExtractorAPI(Vidlink())
     }
 }
