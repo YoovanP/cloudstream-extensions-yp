@@ -2,6 +2,7 @@ package com.custom
 
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
+import android.util.Log
 
 class ZetMoonProvider : MainAPI() {
     override var mainUrl = "https://zetmoon.live"
@@ -18,27 +19,26 @@ class ZetMoonProvider : MainAPI() {
         private const val IMG_BASE = "https://image.tmdb.org/t/p/w500"
         private const val IMG_ORIG = "https://image.tmdb.org/t/p/original"
 
+        private const val VIDLINK_API = "https://vidlink.pro"
+        private const val DECRYPT_API = "https://multidecrypt.megix.workers.dev"
+
         private val EMBED_MOVIE: List<(Int) -> String> = listOf(
             { id -> "https://vidlink.pro/movie/$id" },
             { id -> "https://vidsrc.to/embed/movie/$id" },
-            { id -> "https://embed.su/embed/movie/$id" },
+            { id -> "https://vidsrc.me/embed/movie/$id" },
             { id -> "https://player.autoembed.cc/embed/movie/$id" },
-            { id -> "https://multiembed.mov/directstream.php?video_id=$id&tmdb=1" }
+            { id -> "https://multiembed.mov/?video_id=$id&tmdb=1" }
         )
         private val EMBED_TV: List<(Int, Int, Int) -> String> = listOf(
             { id, s, e -> "https://vidlink.pro/tv/$id/$s/$e" },
             { id, s, e -> "https://vidsrc.to/embed/tv/$id/$s/$e" },
-            { id, s, e -> "https://embed.su/embed/tv/$id/$s/$e" },
+            { id, s, e -> "https://vidsrc.me/embed/tv/$id/$s/$e" },
             { id, s, e -> "https://player.autoembed.cc/embed/tv/$id/$s/$e" },
-            { id, s, e -> "https://multiembed.mov/directstream.php?video_id=$id&tmdb=1&s=$s&e=$e" }
+            { id, s, e -> "https://multiembed.mov/?video_id=$id&tmdb=1&s=$s&e=$e" }
         )
     }
 
-    private fun String.encodeUrl(): String {
-        return java.net.URLEncoder.encode(this, "UTF-8")
-    }
-
-    // â”€â”€â”€ Data classes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ─── Data classes ────────────────────────────────────────────────
 
     data class TmdbResult(
         val id: Int?,
@@ -47,21 +47,14 @@ class ZetMoonProvider : MainAPI() {
         val media_type: String?,
         val poster_path: String?,
         val backdrop_path: String?,
-        val overview: String?,
-        val release_date: String?,
-        val first_air_date: String?,
     )
-
     data class TmdbPage(val results: List<TmdbResult>?)
-
     data class TmdbGenre(val id: Int?, val name: String?)
-
     data class TmdbSeason(
         val season_number: Int?,
         val episode_count: Int?,
         val poster_path: String?,
     )
-
     data class TmdbDetail(
         val id: Int?,
         val title: String?,
@@ -74,8 +67,10 @@ class ZetMoonProvider : MainAPI() {
         val genres: List<TmdbGenre>?,
         val seasons: List<TmdbSeason>?,
     )
+    data class VidlinkResponse(val stream: VidlinkStream)
+    data class VidlinkStream(val playlist: String)
 
-    // â”€â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ─── Helpers ─────────────────────────────────────────────────────
 
     private fun TmdbResult.toSearchResponse(isMovie: Boolean): SearchResponse {
         val title  = this.title ?: this.name ?: ""
@@ -89,7 +84,11 @@ class ZetMoonProvider : MainAPI() {
     private fun movieUrl(id: Int) = "$mainUrl/movie/$id"
     private fun tvUrl(id: Int)    = "$mainUrl/tv/$id"
 
-    // â”€â”€â”€ Main page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    private fun String.encodeUrl(): String {
+        return java.net.URLEncoder.encode(this, "UTF-8")
+    }
+
+    // ─── Main page ───────────────────────────────────────────────────
 
     override val mainPage = mainPageOf(
         "trending/movie/week" to "Trending Movies",
@@ -111,7 +110,7 @@ class ZetMoonProvider : MainAPI() {
         return newHomePageResponse(request.name, items)
     }
 
-    // â”€â”€â”€ Search â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ─── Search ──────────────────────────────────────────────────────
 
     override suspend fun search(query: String): List<SearchResponse> {
         val json = app.get(
@@ -125,7 +124,7 @@ class ZetMoonProvider : MainAPI() {
         } ?: emptyList()
     }
 
-    // â”€â”€â”€ Load â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ─── Load ────────────────────────────────────────────────────────
 
     override suspend fun load(url: String): LoadResponse? {
         val isMovie = url.contains("/movie/")
@@ -176,7 +175,7 @@ class ZetMoonProvider : MainAPI() {
         }
     }
 
-    // â”€â”€â”€ Load links â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ─── Load links ──────────────────────────────────────────────────
 
     override suspend fun loadLinks(
         data: String,
@@ -186,20 +185,66 @@ class ZetMoonProvider : MainAPI() {
     ): Boolean {
         val parts  = data.split("|")
         val tmdbId = parts[0].toIntOrNull() ?: return false
+        val s      = parts.getOrNull(1)?.toIntOrNull()
+        val e      = parts.getOrNull(2)?.toIntOrNull()
 
-        if (parts.size == 1) {
+        // 1. Try Vidlink v2 (Modern API with Decryption)
+        try {
+            invokeVidlink(tmdbId, s, e, subtitleCallback, callback)
+        } catch (ex: Exception) {
+            Log.e("ZetMoon", "Vidlink failed: ${ex.message}")
+        }
+
+        // 2. Try Standard Extractors
+        if (s == null) {
             EMBED_MOVIE.amap { fn ->
-                try { loadExtractor(fn(tmdbId), "${mainUrl}/", subtitleCallback, callback) }
-                catch (_: Exception) { }
+                try {
+                    val url = fn(tmdbId)
+                    loadExtractor(url, "$mainUrl/", subtitleCallback, callback)
+                } catch (_: Exception) { }
             }
         } else {
-            val season  = parts[1].toIntOrNull() ?: 1
-            val episode = parts[2].toIntOrNull() ?: 1
             EMBED_TV.amap { fn ->
-                try { loadExtractor(fn(tmdbId, season, episode), "${mainUrl}/", subtitleCallback, callback) }
-                catch (_: Exception) { }
+                try {
+                    val url = fn(tmdbId, s, e!!)
+                    loadExtractor(url, "$mainUrl/", subtitleCallback, callback)
+                } catch (_: Exception) { }
             }
         }
         return true
+    }
+
+    private suspend fun invokeVidlink(
+        tmdbId: Int,
+        season: Int?,
+        episode: Int?,
+        subtitleCallback: (SubtitleFile) -> Unit,
+        callback: (ExtractorLink) -> Unit
+    ) {
+        val encUrl = "${DECRYPT_API}/enc-vidlink?text=${tmdbId}"
+        val encRes = app.get(encUrl).text
+        val encData = org.json.JSONObject(encRes).getString("result")
+
+        val headers = mapOf(
+            "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Referer" to "${VIDLINK_API}/",
+            "Origin" to VIDLINK_API
+        )
+
+        val apiPath = if (season == null) "movie" else "tv"
+        val epUrl = if (season == null)
+            "${VIDLINK_API}/api/b/${apiPath}/${encData}"
+        else
+            "${VIDLINK_API}/api/b/${apiPath}/${encData}/${season}/${episode}"
+
+        val response = app.get(epUrl, headers = headers).text
+        val data = com.lagradost.cloudstream3.utils.AppUtils.parseJson<VidlinkResponse>(response)
+
+        com.lagradost.cloudstream3.utils.M3u8Helper.generateM3u8(
+            "Vidlink",
+            data.stream.playlist,
+            "${VIDLINK_API}/",
+            headers = headers
+        ).forEach(callback)
     }
 }
