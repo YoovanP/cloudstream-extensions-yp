@@ -9,5 +9,7 @@ class CinetaroPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(CinetaroProvider())
         registerExtractorAPI(Vidlink())
+        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Videasy())
     }
 }

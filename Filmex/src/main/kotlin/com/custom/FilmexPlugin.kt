@@ -9,5 +9,7 @@ class FilmexPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(FilmexProvider())
         registerExtractorAPI(Vidlink())
+        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Videasy())
     }
 }

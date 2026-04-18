@@ -9,5 +9,7 @@ class EE3Plugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(EE3Provider())
         registerExtractorAPI(Vidlink())
+        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Videasy())
     }
 }

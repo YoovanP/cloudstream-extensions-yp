@@ -9,5 +9,7 @@ class SpenFlixPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(SpenFlixProvider())
         registerExtractorAPI(Vidlink())
+        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Videasy())
     }
 }

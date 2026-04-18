@@ -9,5 +9,7 @@ class PoprinkPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(PoprinkProvider())
         registerExtractorAPI(Vidlink())
+        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Videasy())
     }
 }

@@ -9,5 +9,7 @@ class VoidFlixPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(VoidFlixProvider())
         registerExtractorAPI(Vidlink())
+        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Videasy())
     }
 }

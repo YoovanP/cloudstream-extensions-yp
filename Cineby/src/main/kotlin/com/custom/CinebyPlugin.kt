@@ -9,5 +9,7 @@ class CinebyPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(CinebyProvider())
         registerExtractorAPI(Vidlink())
+        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Videasy())
     }
 }

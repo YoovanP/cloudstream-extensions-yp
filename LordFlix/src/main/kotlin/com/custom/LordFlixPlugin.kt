@@ -9,5 +9,7 @@ class LordFlixPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(LordFlixProvider())
         registerExtractorAPI(Vidlink())
+        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Videasy())
     }
 }

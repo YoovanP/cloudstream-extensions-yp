@@ -9,5 +9,7 @@ class PStreamPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(PStreamProvider())
         registerExtractorAPI(Vidlink())
+        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Videasy())
     }
 }

@@ -9,5 +9,7 @@ class NexVidPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(NexVidProvider())
         registerExtractorAPI(Vidlink())
+        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Videasy())
     }
 }

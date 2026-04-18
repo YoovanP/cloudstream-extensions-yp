@@ -9,5 +9,7 @@ class CinegramPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(CinegramProvider())
         registerExtractorAPI(Vidlink())
+        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Videasy())
     }
 }

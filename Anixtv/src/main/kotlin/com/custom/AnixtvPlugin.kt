@@ -9,5 +9,7 @@ class AnixtvPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(AnixtvProvider())
         registerExtractorAPI(Vidlink())
+        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Videasy())
     }
 }

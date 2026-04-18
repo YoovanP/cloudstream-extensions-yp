@@ -9,5 +9,7 @@ class FlixerPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(FlixerProvider())
         registerExtractorAPI(Vidlink())
+        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Videasy())
     }
 }

@@ -9,5 +9,7 @@ class FlickyStreamPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(FlickyStreamProvider())
         registerExtractorAPI(Vidlink())
+        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Videasy())
     }
 }

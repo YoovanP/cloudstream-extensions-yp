@@ -9,5 +9,7 @@ class PrimeshowsPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(PrimeshowsProvider())
         registerExtractorAPI(Vidlink())
+        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Videasy())
     }
 }

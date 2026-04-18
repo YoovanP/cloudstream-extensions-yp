@@ -9,5 +9,7 @@ class XPrimePlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(XPrimeProvider())
         registerExtractorAPI(Vidlink())
+        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Videasy())
     }
 }
