@@ -1,0 +1,25 @@
+# Gradle build outputs
+build/
+.gradle/
+*.apk
+*.aab
+out/
+
+# Android local config (contains your SDK path - keep private)
+local.properties
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Scaffold helper scripts (not needed in the repo)
+scaffold_extensions.py
+scaffold_extensions.ps1
+
+# Old flat .kt drafts at root level (only root, not inside extension modules)
+/*.kt
