@@ -1,0 +1,8 @@
+{
+  "name": "YoovanP's Extensions",
+  "description": "A collection of 30 custom Cloudstream 3 extensions for various streaming sites.",
+  "author": "YoovanP",
+  "pluginLists": [
+    "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/plugins.json"
+  ]
+}

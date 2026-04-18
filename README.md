@@ -4,6 +4,19 @@
 
 ---
 
+## 🚀 One-Click Install
+
+To install all extensions in this repository at once:
+
+1.  **Click this link** (if on a device with Cloudstream installed):
+    [**Add YoovanP's Extensions**](cloudstreamrepo://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/main/repo.json)
+2.  **Alternatively**, copy and paste this URL into the app under **Settings → Extensions → Add Repository**:
+    ```text
+    https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/main/repo.json
+    ```
+
+---
+
 ## Providers
 
 | Extension | Site | Type |
@@ -43,48 +56,25 @@
 
 ## How it Works
 
-All providers follow the same pattern:
-
-1. **Search & Metadata** — Queries the [TMDB API](https://www.themoviedb.org/documentation/api) using the site's native TMDB-ID-based URL scheme
-2. **Video Links** — Loads from a rotating list of public embed servers (vidlink, vidsrc, embed.su, autoembed, multiembed)
-3. **Episodes** — TV seasons and episode counts are fetched directly from TMDB's `append_to_response=seasons` endpoint
-
-Each provider is a self-contained Gradle module with its own `build.gradle.kts`, `AndroidManifest.xml`, a `@CloudstreamPlugin` registration class, and the provider implementation.
+1. **Search & Metadata** — Queries [TMDB API](https://www.themoviedb.org/documentation/api) directly.
+2. **Video Links** — Aggregates links from multiple embed servers (vidlink, vidsrc, embed.su, etc.).
+3. **Architecture** — Each provider is a standalone Gradle module for maximum stability.
 
 ---
 
-## Building
+## Development & Building
 
-**Requires:** Android Studio (for the Android SDK) and JDK 11+
+**Requires:** Android Studio (SDK) and JDK 17+
 
 ```bash
-# Clone the repo
-git clone https://github.com/YoovanP/cloudstream-extensions-yp.git
-cd cloudstream-extensions-yp
-
-# Build all extensions
+# Build all extensions locally
 ./gradlew assembleRelease
 ```
 
-Output `.cs3` plugin files will be in each module's `build/` directory.
-
-To build a single extension:
-```bash
-./gradlew :Cineby:assembleRelease
-```
+Compiled extensions can be found in `[ModuleName]/build/outputs/`.
 
 ---
 
-## Installing in Cloudstream
+## License & Disclaimer
 
-1. Build the extension (see above), or download a pre-built `.cs3` from [Releases](https://github.com/YoovanP/cloudstream-extensions-yp/releases)
-2. In Cloudstream 3, go to **Settings → Extensions → Add Extension**
-3. Paste the URL to the `.cs3` file, or sideload it directly from your device
-
----
-
-## Notes
-
-- These extensions use the public TMDB API. If you hit rate limits, replace `TMDB_KEY` in the source with your own key from [themoviedb.org](https://www.themoviedb.org/settings/api)
-- Embed server availability changes — update the `EMBED_MOVIE` / `EMBED_TV` lists in each provider as needed
-- Some sites (e.g. PopcornMovies) are behind Cloudflare and may require a bypass interceptor to work in production
+These extensions are for educational purposes and personal use only. The authors do not host any content. Use responsibly.
