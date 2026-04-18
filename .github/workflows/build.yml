@@ -20,13 +20,6 @@ jobs:
         with:
           path: "src"
 
-      - name: Checkout Builds Branch
-        uses: actions/checkout@v4
-        with:
-          ref: "builds"
-          path: "builds"
-        continue-on-error: true # Creates it if it doesn't exist later
-
       - name: Setup JDK 17
         uses: actions/setup-java@v4
         with:
@@ -42,26 +35,35 @@ jobs:
           chmod +x gradlew
           ./gradlew make makePluginsJson
 
-          # Copy artifacts to builds folder
-          mkdir -p ../builds
-          cp **/build/*.cs3 ../builds/ || echo "No .cs3 files found"
-          cp build/plugins.json ../builds/ || echo "No plugins.json found"
-
-      - name: Push builds
+      - name: Deploy to Builds Branch
         run: |
-          cd builds
-          # Force create builds branch if index doesn't exist
-          if [ ! -d ".git" ]; then
-             git init
-             git remote add origin https://github.com/${{ github.repository }}
-             git checkout -b builds
+          mkdir builds_dir
+          cd builds_dir
+          git init
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          
+          # Add remote with token for authentication
+          git remote add origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+          
+          # Try to fetch existing builds branch
+          if git fetch origin builds; then
+            git checkout builds
+          else
+            git checkout --orphan builds
+            git rm -rf .
           fi
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
+          
+          # Clean old builds and copy new ones
+          rm -f *.cs3 plugins.json repo.json || true
+          cp ../src/**/build/*.cs3 ./ 2>/dev/null || echo "No .cs3 files found"
+          cp ../src/build/plugins.json ./ 2>/dev/null || echo "No plugins.json found"
+          cp ../src/repo.json ./ 2>/dev/null || echo "No repo.json found"
+          
           git add .
           if [[ -n $(git status -s) ]]; then
             git commit -m "Build $GITHUB_SHA"
-            git push origin builds --force
+            git push origin builds
           else
             echo "No changes to push"
           fi
