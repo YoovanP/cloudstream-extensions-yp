@@ -34,6 +34,10 @@ class RiveProvider : MainAPI() {
         )
     }
 
+    private fun String.encodeUrl(): String {
+        return java.net.URLEncoder.encode(this, "UTF-8")
+    }
+
     // â”€â”€â”€ Data classes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     data class TmdbResult(

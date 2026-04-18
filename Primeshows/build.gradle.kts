@@ -8,4 +8,5 @@ cloudstream {
     status = 1
     tvTypes = listOf("Movie", "TvSeries")
     iconUrl = "https://www.google.com/s2/favicons?domain=www.primeshows.uk&sz=%size%"
+    requiresResources = false
 }

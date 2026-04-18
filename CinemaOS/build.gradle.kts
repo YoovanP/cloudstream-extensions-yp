@@ -8,4 +8,5 @@ cloudstream {
     status = 1
     tvTypes = listOf("Movie", "TvSeries", "Anime")
     iconUrl = "https://www.google.com/s2/favicons?domain=cinemaos.live&sz=%size%"
+    requiresResources = false
 }

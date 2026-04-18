@@ -8,4 +8,5 @@ cloudstream {
     status = 1
     tvTypes = listOf("Movie", "TvSeries")
     iconUrl = "https://www.google.com/s2/favicons?domain=filmytime.site&sz=%size%"
+    requiresResources = false
 }
