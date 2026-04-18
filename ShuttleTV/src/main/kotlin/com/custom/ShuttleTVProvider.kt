@@ -14,7 +14,7 @@ class ShuttleTVProvider : MainAPI() {
 
     companion object {
         private const val TMDB_API = "https://api.themoviedb.org/3"
-        private const val TMDB_KEY = "8d6d91941230817f7807d54acb29712a"
+        private const val TMDB_KEY = "17f7b9d5b48c5446e781e13bfa980f61"
         private const val IMG_BASE = "https://image.tmdb.org/t/p/w500"
         private const val IMG_ORIG = "https://image.tmdb.org/t/p/original"
 
