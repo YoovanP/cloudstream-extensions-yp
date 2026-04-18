@@ -1,0 +1,635 @@
+[
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/Aether.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "Aether",
+        "internalName": "Aether",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies & Shows on Aether",
+        "fileSize": 22847,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=aether.mom&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-4ef8b6bc530d4b6592b41c6130e74288dd216184491478f104c27b0742fb7762"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/Anixtv.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "Anixtv",
+        "internalName": "Anixtv",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Anime & Movies on Anixtv",
+        "fileSize": 22861,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries",
+            "Anime"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=anixtv.us.cc&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-7edbdd82952b27dbf231ce29fbf2fef3ca8f4f6c39e667f1908887a868eaa970"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/CineBolt.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "CineBolt",
+        "internalName": "CineBolt",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies & Shows on CineBolt",
+        "fileSize": 22855,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=cinebolt.net&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-d0a6ec5c6072f441aebbb9f52467abf6806ae4a9af73d6e2ba8012c04f37d70d"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/Cineby.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "Cineby",
+        "internalName": "Cineby",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies & TV Shows on Cineby",
+        "fileSize": 22844,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=cineby.sc&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-b53904b203a582db490bed736a8b14e7cacc83c5d0df595878365faa3bccfdfb"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/Cinegram.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "Cinegram",
+        "internalName": "Cinegram",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies & Shows on Cinegram",
+        "fileSize": 22841,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=cinegram.net&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-63a7a24e78b953992f7fa0fe6327c134b56fb151317297b610f947df659bd312"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/CinemaOS.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "CinemaOS",
+        "internalName": "CinemaOS",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "All your favorite platforms in one place",
+        "fileSize": 22874,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries",
+            "Anime"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=cinemaos.live&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-ecf95d12bad4c4f1dcc3889d5e2ade016594c8731598e562ca3de87d91712940"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/Cinetaro.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "Cinetaro",
+        "internalName": "Cinetaro",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies & Shows on Cinetaro",
+        "fileSize": 22854,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=cinetaro.tv&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-8d4f1f6a18e01cbf80e4d38fa4999b27c365fb9bd19c2b6a7a08b46a6e158442"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/Cinezo.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "Cinezo",
+        "internalName": "Cinezo",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies & Shows on Cinezo",
+        "fileSize": 22847,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=cinezo.net&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-af751446f70f18da778f0265c7e672446000995fbc4099d99a965832eb16fa27"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/DuloTV.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "DuloTV",
+        "internalName": "DuloTV",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies & Shows on dulo.tv",
+        "fileSize": 22844,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=dulo.tv&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-a2c61e8c0d01fd25f0bd21a9ecd32ddd7a9e328eda70f6db44c46d9ee84d655f"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/EE3.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "EE3",
+        "internalName": "EE3",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies & Shows on EE3",
+        "fileSize": 22435,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=ee3.me&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-8a53552b4c2132cbda1197fa97397fca3711a34d637868aba7b7d7748060612d"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/Filmex.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "Filmex",
+        "internalName": "Filmex",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch free HD Movies & TV on Filmex",
+        "fileSize": 22842,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=filmex.to&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-772e2b3a5f729a30f7eb562131508b91fdf74b8dfcb2105c93d4f76f1e0bbb12"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/FilmyTime.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "FilmyTime",
+        "internalName": "FilmyTime",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies & Shows on FilmyTime",
+        "fileSize": 22863,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=filmytime.site&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-336cf11c216965ebfb446920729ea8b001432fcc5f801378a2763cd3c9ae4520"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/FlickyStream.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "FlickyStream",
+        "internalName": "FlickyStream",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies & Shows on FlickyStream",
+        "fileSize": 22872,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=flickystream.ru&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-27d73b9becb2d9e468f86e2c29f5b7d8e3acfe0fd4fc297f427dc3037f05d999"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/Flixer.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "Flixer",
+        "internalName": "Flixer",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies & Shows on Flixer",
+        "fileSize": 22865,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=flixer.su&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-0d2a85e5ab2fd5881f0abbe6ebe0790a95dbac9d706da6d507a6c3a6db0bbc5d"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/FlyX.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "FlyX",
+        "internalName": "FlyX",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies & Shows on FlyX",
+        "fileSize": 22859,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=tv.vynx.cc&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-015541034c601edece5a0051190b595ef68a0c21ed14f70552939a469efb9778"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/IceFY.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "IceFY",
+        "internalName": "IceFY",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies & Shows on IceFY",
+        "fileSize": 22844,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=icefy.top&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-38e70af2c83865245acdea6260721d455f4f06f20af6d307f9817dd89ee49a0f"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/LordFlix.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "LordFlix",
+        "internalName": "LordFlix",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies & TV Shows on LordFlix",
+        "fileSize": 22853,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=lordflix.org&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-d678683f69f1fdeb6202df5f5d9348d0a4c499e8a3577f81d617b1e139f271fb"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/NexVid.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "NexVid",
+        "internalName": "NexVid",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies & Shows on NexVid",
+        "fileSize": 22855,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=nexvid.online&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-8f2cc175e2dfe3175472f6c81a7eef1bebacbe7b0309aed4d480421f7f3c2499"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/PopcornMovies.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "PopcornMovies",
+        "internalName": "PopcornMovies",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies on PopcornMovies",
+        "fileSize": 22854,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=popcornmovies.org&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-46fdda6eddb9ddc1b0e677121c017c932f4203c6c11994bbbc365e32725c3539"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/Poprink.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "Poprink",
+        "internalName": "Poprink",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies & Shows on Poprink",
+        "fileSize": 22836,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=popr.ink&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-e9f389f08b38a531079d0eceefaa4524d211d138feecde7ec42b0973d7767a21"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/Primeshows.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "Primeshows",
+        "internalName": "Primeshows",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies & Shows on Primeshows",
+        "fileSize": 22856,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=www.primeshows.uk&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-36d6aa1bb17a3f7d345fc3e29505a6c79f90f01591fd59f23434a3dd3f231130"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/PStream.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "PStream",
+        "internalName": "PStream",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies & Shows on P-Stream",
+        "fileSize": 22839,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=pstream.net&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-3010fae8dba5f9ba6b5033e6573d4c6e10a279dc31747ba59dfe54e1613b7dfb"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/Rive.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "Rive",
+        "internalName": "Rive",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies & Shows on Rive",
+        "fileSize": 22852,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries",
+            "Anime"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=rivestream.org&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-cc0d721cf2c78e7a1b7c2b6f84675878e1e9fd82ed83353da2c969365dd68ff4"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/SanuFlix.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "SanuFlix",
+        "internalName": "SanuFlix",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies & Shows on SanuFlix",
+        "fileSize": 22863,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=sanuflix-web-v2.pages.dev&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-a928fa467c37429f8022fbdef5a0961639bfa0cf6df6e0cca8f6fc072bb014fe"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/ShuttleTV.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "ShuttleTV",
+        "internalName": "ShuttleTV",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies & Shows on ShuttleTV",
+        "fileSize": 22857,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=shuttletv.su&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-f4eb32c061c567b46f9699732ff7411d782f970a22df2e244b6b55e5498da5df"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/SixtySevenMovies.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "SixtySevenMovies",
+        "internalName": "SixtySevenMovies",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies & TV on 67Movies",
+        "fileSize": 22879,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=67movies.net&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-8ba4956459c2708eda2f0c9bd48cbbb01138535700e3e7e4659baf8d1e854780"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/SpenFlix.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "SpenFlix",
+        "internalName": "SpenFlix",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies & Shows on SpenFlix",
+        "fileSize": 22870,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=watch.spencerdevs.xyz&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-160c4e4eabae098785ae5bb51ffbcecd3acda054a4c65eaba2cb85128aca85d3"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/VoidFlix.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "VoidFlix",
+        "internalName": "VoidFlix",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies & Shows on VoidFlix",
+        "fileSize": 22930,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=flixzy.pages.dev&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-7914e848cc4493d9f291138e1dd3e0bccd5ee95eeb7a3f1d27888b3fe62ddc7b"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/XPrime.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "XPrime",
+        "internalName": "XPrime",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies & Shows on XPrime",
+        "fileSize": 22910,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=xprime.su&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-7035e514b89b63c2fd8e893bff5f5dd6b736085a861d260b6f4209868862b410"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/ZetMoon.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "ZetMoon",
+        "internalName": "ZetMoon",
+        "authors": [
+            "YoovanP"
+        ],
+        "description": "Watch Movies & Shows on ZetMoon",
+        "fileSize": 22913,
+        "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
+        "language": "en",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=zetmoon.live&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-2fdf2e07a5292ca8e6752dbaeb69db9db65e4dd927c2bf1917ad99cfe0097c01"
+    }
+]
