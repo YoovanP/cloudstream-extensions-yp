@@ -9,7 +9,9 @@ class CineBoltPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(CineBoltProvider())
         registerExtractorAPI(Vidlink())
-        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Vidsrccc())
+        registerExtractorAPI(Megacloud())
+        registerExtractorAPI(HubCloud())
         registerExtractorAPI(Videasy())
     }
 }

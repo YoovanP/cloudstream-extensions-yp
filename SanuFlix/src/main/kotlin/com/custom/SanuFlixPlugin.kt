@@ -9,7 +9,9 @@ class SanuFlixPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(SanuFlixProvider())
         registerExtractorAPI(Vidlink())
-        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Vidsrccc())
+        registerExtractorAPI(Megacloud())
+        registerExtractorAPI(HubCloud())
         registerExtractorAPI(Videasy())
     }
 }

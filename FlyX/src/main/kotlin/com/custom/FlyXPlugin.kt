@@ -9,7 +9,9 @@ class FlyXPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(FlyXProvider())
         registerExtractorAPI(Vidlink())
-        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Vidsrccc())
+        registerExtractorAPI(Megacloud())
+        registerExtractorAPI(HubCloud())
         registerExtractorAPI(Videasy())
     }
 }

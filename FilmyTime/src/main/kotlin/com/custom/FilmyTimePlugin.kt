@@ -9,7 +9,9 @@ class FilmyTimePlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(FilmyTimeProvider())
         registerExtractorAPI(Vidlink())
-        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Vidsrccc())
+        registerExtractorAPI(Megacloud())
+        registerExtractorAPI(HubCloud())
         registerExtractorAPI(Videasy())
     }
 }

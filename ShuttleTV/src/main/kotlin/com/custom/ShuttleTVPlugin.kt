@@ -9,7 +9,9 @@ class ShuttleTVPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(ShuttleTVProvider())
         registerExtractorAPI(Vidlink())
-        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Vidsrccc())
+        registerExtractorAPI(Megacloud())
+        registerExtractorAPI(HubCloud())
         registerExtractorAPI(Videasy())
     }
 }

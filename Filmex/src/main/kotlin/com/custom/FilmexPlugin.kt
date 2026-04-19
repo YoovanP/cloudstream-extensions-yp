@@ -9,7 +9,9 @@ class FilmexPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(FilmexProvider())
         registerExtractorAPI(Vidlink())
-        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Vidsrccc())
+        registerExtractorAPI(Megacloud())
+        registerExtractorAPI(HubCloud())
         registerExtractorAPI(Videasy())
     }
 }

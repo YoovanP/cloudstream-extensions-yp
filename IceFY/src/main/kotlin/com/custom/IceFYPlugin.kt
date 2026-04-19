@@ -9,7 +9,9 @@ class IceFYPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(IceFYProvider())
         registerExtractorAPI(Vidlink())
-        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Vidsrccc())
+        registerExtractorAPI(Megacloud())
+        registerExtractorAPI(HubCloud())
         registerExtractorAPI(Videasy())
     }
 }

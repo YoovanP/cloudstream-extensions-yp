@@ -9,7 +9,9 @@ class PopcornMoviesPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(PopcornMoviesProvider())
         registerExtractorAPI(Vidlink())
-        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Vidsrccc())
+        registerExtractorAPI(Megacloud())
+        registerExtractorAPI(HubCloud())
         registerExtractorAPI(Videasy())
     }
 }

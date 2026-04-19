@@ -9,7 +9,9 @@ class SpenFlixPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(SpenFlixProvider())
         registerExtractorAPI(Vidlink())
-        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Vidsrccc())
+        registerExtractorAPI(Megacloud())
+        registerExtractorAPI(HubCloud())
         registerExtractorAPI(Videasy())
     }
 }

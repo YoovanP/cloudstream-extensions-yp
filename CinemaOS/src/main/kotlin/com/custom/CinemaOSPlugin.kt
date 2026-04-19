@@ -9,7 +9,9 @@ class CinemaOSPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(CinemaOSProvider())
         registerExtractorAPI(Vidlink())
-        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Vidsrccc())
+        registerExtractorAPI(Megacloud())
+        registerExtractorAPI(HubCloud())
         registerExtractorAPI(Videasy())
     }
 }

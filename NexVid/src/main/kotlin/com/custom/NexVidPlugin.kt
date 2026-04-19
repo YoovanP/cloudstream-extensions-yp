@@ -9,7 +9,9 @@ class NexVidPlugin : Plugin() {
     override fun load(context: Context) {
         registerMainAPI(NexVidProvider())
         registerExtractorAPI(Vidlink())
-        registerExtractorAPI(AetherHls())
+        registerExtractorAPI(Vidsrccc())
+        registerExtractorAPI(Megacloud())
+        registerExtractorAPI(HubCloud())
         registerExtractorAPI(Videasy())
     }
 }
