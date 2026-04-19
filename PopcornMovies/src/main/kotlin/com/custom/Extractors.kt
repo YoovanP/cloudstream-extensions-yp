@@ -112,7 +112,7 @@ class Vidsrccc : ExtractorApi() {
         servers.forEach { server ->
             val source = app.get("$mainUrl/api/source/${server.hash}").parsedSafe<VidsrcSource>()?.data?.source ?: return@forEach
             val res = app.get(source, referer = mainUrl).text
-            val m3u8 = Regex("""var\s+source\s*=\s*"([^"]+)"""\).find(res)?.groupValues?.get(1)?.replace("\\/", "/") ?: return@forEach
+            val m3u8 = Regex("var\\s+source\\s*=\\s*\"([^\"]+)\"").find(res)?.groupValues?.get(1)?.replace("\\/", "/") ?: return@forEach
             M3u8Helper.generateM3u8("Vidsrc [${server.name}]", m3u8, mainUrl).forEach(callback)
         }
     }
@@ -158,6 +158,7 @@ class Megacloud : Rabbitstream() {
 class HubCloud : ExtractorApi() {
     override var name = "Hub-Cloud"
     override var mainUrl = "https://hubcloud.club"
+    override val requiresReferer = false
 
     override suspend fun getUrl(url: String, referer: String?, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit) {
         val doc = app.get(url).document
