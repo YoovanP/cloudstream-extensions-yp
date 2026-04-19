@@ -42,9 +42,9 @@ class FilmyTimeProvider : MainAPI() {
         // FilmyTime uses native search to find internal records
         val searchUrl = "$mainUrl/?s=${query.encodeUrl()}"
         val doc = app.get(searchUrl).document
-        return doc.select("article.item").map { item ->
-            val title = item.selectFirst("h3")?.text() ?: ""
-            val href = item.selectFirst("a")?.attr("href") ?: ""
+        return doc.select("article.item").mapNotNull { item ->
+            val title = item.selectFirst("h3")?.text() ?: return@mapNotNull null
+            val href = item.selectFirst("a")?.attr("href") ?: return@mapNotNull null
             val poster = item.selectFirst("img")?.attr("src")
             newMovieSearchResponse(title, href, TvType.Movie) {
                 posterUrl = poster
@@ -74,8 +74,8 @@ class FilmyTimeProvider : MainAPI() {
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
         val parts = data.split("|"); val tmdbId = parts[0]; val s = parts.getOrNull(1); val e = parts.getOrNull(2)
 
-        val movieEmbeds = listOf({ id -> "https://vidlink.pro/movie/$id" }, { id -> "https://vidsrc.to/embed/movie/$id" }, { id -> "https://vidsrc.me/embed/movie/$id" }, { id -> "https://player.autoembed.cc/embed/movie/$id" }, { id -> "https://multiembed.mov/?video_id=$id&tmdb=1" })
-        val tvEmbeds = listOf({ id, s, e -> "https://vidlink.pro/tv/$id/$s/$e" }, { id, s, e -> "https://vidsrc.to/embed/tv/$id/$s/$e" }, { id, s, e -> "https://vidsrc.me/embed/tv/$id/$s/$e" }, { id, s, e -> "https://player.autoembed.cc/embed/tv/$id/$s/$e" }, { id, s, e -> "https://multiembed.mov/?video_id=$id&tmdb=1&s=$s&e=$e" })
+        val movieEmbeds = listOf<(Int) -> String>({ id: Int -> "https://vidlink.pro/movie/$id" }, { id: Int -> "https://vidsrc.to/embed/movie/$id" }, { id: Int -> "https://vidsrc.me/embed/movie/$id" }, { id: Int -> "https://player.autoembed.cc/embed/movie/$id" }, { id: Int -> "https://multiembed.mov/?video_id=$id&tmdb=1" })
+        val tvEmbeds = listOf<(Int, Int, Int) -> String>({ id: Int, s: Int, e: Int -> "https://vidlink.pro/tv/$id/$s/$e" }, { id: Int, s: Int, e: Int -> "https://vidsrc.to/embed/tv/$id/$s/$e" }, { id: Int, s: Int, e: Int -> "https://vidsrc.me/embed/tv/$id/$s/$e" }, { id: Int, s: Int, e: Int -> "https://player.autoembed.cc/embed/tv/$id/$s/$e" }, { id: Int, s: Int, e: Int -> "https://multiembed.mov/?video_id=$id&tmdb=1&s=$s&e=$e" })
 
         if (s == null) movieEmbeds.forEach { embed -> try { CommonLoader.loadLinks(embed(tmdbId.toInt()), "$mainUrl/", subtitleCallback, callback) } catch(_: Exception) {} }
         else tvEmbeds.forEach { embed -> try { CommonLoader.loadLinks(embed(tmdbId.toInt(), s.toInt(), e!!.toInt()), "$mainUrl/", subtitleCallback, callback) } catch(_: Exception) {} }

@@ -70,8 +70,8 @@ class AetherProvider : MainAPI() {
             val type = if (s == null) "movie" else "tv"
             loadExtractor("https://tik.aether.mom/watch/$tmdbId", "$mainUrl/", subtitleCallback, callback)
         } catch (_: Exception) { }
-        val movieEmbeds = listOf({ id -> "https://vidlink.pro/movie/$id" }, { id -> "https://vidsrc.to/embed/movie/$id" }, { id -> "https://vidsrc.me/embed/movie/$id" }, { id -> "https://player.autoembed.cc/embed/movie/$id" }, { id -> "https://multiembed.mov/?video_id=$id&tmdb=1" })
-        val tvEmbeds = listOf({ id, s, e -> "https://vidlink.pro/tv/$id/$s/$e" }, { id, s, e -> "https://vidsrc.to/embed/tv/$id/$s/$e" }, { id, s, e -> "https://vidsrc.me/embed/tv/$id/$s/$e" }, { id, s, e -> "https://player.autoembed.cc/embed/tv/$id/$s/$e" }, { id, s, e -> "https://multiembed.mov/?video_id=$id&tmdb=1&s=$s&e=$e" })
+        val movieEmbeds = listOf<(Int) -> String>({ id: Int -> "https://vidlink.pro/movie/$id" }, { id: Int -> "https://vidsrc.to/embed/movie/$id" }, { id: Int -> "https://vidsrc.me/embed/movie/$id" }, { id: Int -> "https://player.autoembed.cc/embed/movie/$id" }, { id: Int -> "https://multiembed.mov/?video_id=$id&tmdb=1" })
+        val tvEmbeds = listOf<(Int, Int, Int) -> String>({ id: Int, s: Int, e: Int -> "https://vidlink.pro/tv/$id/$s/$e" }, { id: Int, s: Int, e: Int -> "https://vidsrc.to/embed/tv/$id/$s/$e" }, { id: Int, s: Int, e: Int -> "https://vidsrc.me/embed/tv/$id/$s/$e" }, { id: Int, s: Int, e: Int -> "https://player.autoembed.cc/embed/tv/$id/$s/$e" }, { id: Int, s: Int, e: Int -> "https://multiembed.mov/?video_id=$id&tmdb=1&s=$s&e=$e" })
 
         if (s == null) movieEmbeds.forEach { embed -> try { CommonLoader.loadLinks(embed(tmdbId.toInt()), "$mainUrl/", subtitleCallback, callback) } catch(_: Exception) {} }
         else tvEmbeds.forEach { embed -> try { CommonLoader.loadLinks(embed(tmdbId.toInt(), s.toInt(), e!!.toInt()), "$mainUrl/", subtitleCallback, callback) } catch(_: Exception) {} }
