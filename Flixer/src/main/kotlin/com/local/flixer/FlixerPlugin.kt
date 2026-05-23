@@ -1,0 +1,11 @@
+package com.local.flixer
+
+import com.lagradost.cloudstream3.plugins.BasePlugin
+import com.lagradost.cloudstream3.plugins.CloudstreamPlugin
+
+@CloudstreamPlugin
+class FlixerPlugin : BasePlugin() {
+    override fun load() {
+        registerMainAPI(FlixerProvider())
+    }
+}

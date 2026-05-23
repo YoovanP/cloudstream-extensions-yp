@@ -1,80 +1,108 @@
-# cloudstream-extensions-yp
+# Site Extension Lab
 
-> A collection of 30 custom [Cloudstream 3](https://github.com/recloudstream/cloudstream) extension providers for popular streaming aggregator and embed-frontend sites.
+This pack contains one Cloudstream extension module per requested site name.
 
----
+Each module includes:
+- `build.gradle.kts` with cloudstream metadata
+- Plugin entry class annotated with `CloudstreamPlugin`
+- A thin provider class that uses the shared `TmdbCatalogProvider`
+- Shared implementations for TMDB catalog browsing/search/details and Videasy stream/subtitle resolution
 
-## 🚀 One-Click Install
+Total modules: 32
 
-To install all extensions in this repository at once:
+## How It Connects To CloudStream
 
-1.  **Click this link** (if on a device with Cloudstream installed):
-    [**Add YoovanP's Extensions**](cloudstreamrepo://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/main/repo.json)
-2.  **Alternatively**, copy and paste this URL into the app under **Settings → Extensions → Add Repository**:
-    ```text
-    https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/main/repo.json
-    ```
+CloudStream loads extension artifacts, not source folders.
 
----
+1. `./gradlew make makePluginsJson` builds each module into a `.cs3` file and creates `build/plugins.json`.
+2. `plugins.json` describes each `.cs3` file with name, version, status, language, and URL.
+3. The app downloads or locally loads a `.cs3`, reads its generated `manifest.json`, then instantiates the class annotated with `CloudstreamPlugin`.
+4. Each plugin calls `registerMainAPI(...)`, which adds the provider to CloudStream's provider list.
 
-## Providers
+For local testing, copy generated `.cs3` files into the app's local plugins folder. For repo installation, publish `build/plugins.json`, the `.cs3` files, and a repository manifest that points to that plugin list.
 
-| Extension | Site | Type |
-|-----------|------|------|
-| Aether | [aether.mom](https://aether.mom) | Embed Frontend |
-| Anixtv | [anixtv.us.cc](https://anixtv.us.cc) | Embed Frontend |
-| CineBolt | [cinebolt.net](https://cinebolt.net) | Aggregator |
-| Cineby | [cineby.sc](https://www.cineby.sc) | Embed Frontend |
-| Cinegram | [cinegram.net](https://cinegram.net) | Embed Frontend |
-| CinemaOS | [cinemaos.live](https://cinemaos.live) | Aggregator |
-| Cinetaro | [cinetaro.tv](https://cinetaro.tv) | Aggregator |
-| Cinezo | [cinezo.net](https://cinezo.net) | Aggregator |
-| DuloTV | [dulo.tv](https://dulo.tv) | Aggregator |
-| EE3 | [ee3.me](https://ee3.me) | Single Server |
-| Filmex | [filmex.to](https://filmex.to) | Aggregator |
-| FilmyTime | [filmytime.site](https://filmytime.site) | Aggregator |
-| FlickyStream | [flickystream.ru](https://flickystream.ru) | Embed Frontend |
-| Flixer | [flixer.su](https://flixer.su) | Aggregator |
-| FlyX | [tv.vynx.cc](https://tv.vynx.cc) | Aggregator |
-| IceFY | [icefy.top](https://icefy.top) | Aggregator |
-| LordFlix | [lordflix.org](https://lordflix.org) | Embed Frontend |
-| NexVid | [nexvid.online](https://nexvid.online) | Aggregator |
-| PopcornMovies | [popcornmovies.org](https://popcornmovies.org) | Embed Frontend |
-| Poprink | [popr.ink](https://popr.ink) | Aggregator |
-| Primeshows | [primeshows.uk](https://www.primeshows.uk) | Aggregator |
-| PStream | [pstream.net](https://pstream.net) | Embed Frontend |
-| Rive | [rivestream.org](https://rivestream.org) | Embed Frontend |
-| SanuFlix | [sanuflix-web-v2.pages.dev](https://sanuflix-web-v2.pages.dev) | Embed Frontend |
-| ShuttleTV | [shuttletv.su](https://shuttletv.su) | Embed Frontend |
-| 67Movies | [67movies.net](https://67movies.net) | Embed Frontend |
-| SpenFlix | [watch.spencerdevs.xyz](https://watch.spencerdevs.xyz) | Embed Frontend |
-| VoidFlix | [flixzy.pages.dev](https://flixzy.pages.dev) | Embed Frontend |
-| XPrime | [xprime.su](https://xprime.su) | Aggregator |
-| ZetMoon | [zetmoon.live](https://zetmoon.live) | Aggregator |
+Once pushed to GitHub, add this repository manifest in CloudStream:
 
----
-
-## How it Works
-
-1. **Search & Metadata** — Queries [TMDB API](https://www.themoviedb.org/documentation/api) directly.
-2. **Video Links** — Aggregates links from multiple embed servers (vidlink, vidsrc, embed.su, etc.).
-3. **Architecture** — Each provider is a standalone Gradle module for maximum stability.
-
----
-
-## Development & Building
-
-**Requires:** Android Studio (SDK) and JDK 17+
-
-```bash
-# Build all extensions locally
-./gradlew assembleRelease
+```text
+https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/main/repo.json
 ```
 
-Compiled extensions can be found in `[ModuleName]/build/outputs/`.
+If the source branch is `master`, use `/master/repo.json` instead of `/main/repo.json`.
 
----
+## Build
 
-## License & Disclaimer
+This folder now includes a Gradle wrapper.
 
-These extensions are for educational purposes and personal use only. The authors do not host any content. Use responsibly.
+Create `local.properties` with your Android SDK path. A template is included at `local.properties.example`:
+
+```properties
+sdk.dir=C:\\tmp\\android-sdk
+```
+
+Then run:
+
+```powershell
+.\gradlew.bat make makePluginsJson
+```
+
+The fallback repository is set to `https://github.com/YoovanP/cloudstream-extensions-yp`.
+The repo also includes `gradle.properties` so the 32-module pack builds serially without exhausting the Kotlin daemon heap.
+
+## Streaming Sites
+- Cineby -> module `Cineby` -> https://www.cineby.sc/
+- XPrime -> module `XPrime` -> https://xprime.su/
+- Rive -> module `Rive` -> https://rivestream.org/
+- LordFlix -> module `LordFlix` -> https://lordflix.org/
+- PopcornMovies -> module `PopcornMovies` -> https://popcornmovies.org/
+- 67Movies -> module `M67Movies` -> https://67movies.net/
+- FlickyStream -> module `FlickyStream` -> https://flickystream.ru/
+- Aether -> module `Aether` -> https://aether.mom/
+- Cinegram -> module `Cinegram` -> https://cinegram.net/
+- ShuttleTV -> module `ShuttleTV` -> https://shuttletv.su/
+- SpenFlix -> module `SpenFlix` -> https://watch.spencerdevs.xyz/
+- Cinetaro -> module `Cinetaro` -> https://cinetaro.tv/
+
+## Single Server
+- NEPU -> module `NEPU` -> https://nepu.to/
+- EE3 -> module `EE3` -> https://ee3.me/
+- yFlix -> module `YFlix` -> https://yflix.to/
+
+## Stream Aggregators
+- Flixer -> module `Flixer` -> https://flixer.su
+- Cinezo -> module `Cinezo` -> https://www.cinezo.net/
+- FlyX -> module `FlyX` -> https://tv.vynx.cc/
+- Filmex -> module `Filmex` -> https://filmex.to/
+- CinemaOS -> module `CinemaOS` -> https://cinemaos.live/
+- Poprink -> module `Poprink` -> https://www.popr.ink/
+- FilmyTime -> module `FilmyTime` -> https://www.filmytime.site/
+- CineBolt -> module `CineBolt` -> https://cinebolt.net/
+- Primeshows -> module `PrimeShows` -> https://www.primeshows.uk/
+- NexVid -> module `NexVid` -> https://nexvid.online/
+- IceFY -> module `IceFY` -> https://icefy.top/
+- P-Stream (Fork) -> module `PStreamFork` -> https://pstream.net/
+- SanuFlix -> module `SanuFlix` -> https://sanuflix-web-v2.pages.dev/
+- dulo.tv -> module `DuloTv` -> https://dulo.tv/
+- ZetMoon -> module `ZetMoon` -> https://zetmoon.live/
+
+## Embed Frontends
+- Anixtv -> module `Anixtv` -> https://anixtv.us.cc/
+- VoidFlix -> module `VoidFlix` -> https://flixzy.pages.dev/
+
+## Provider Pattern
+
+Each module keeps a tiny site-specific provider:
+
+```kotlin
+class CinebyProvider : TmdbCatalogProvider(
+    siteTitle = "Cineby",
+    siteUrl = "https://www.cineby.sc/"
+)
+```
+
+The shared provider handles the app-facing behavior CloudStream needs:
+- TMDB-powered home rows, search results, movie details, and TV episode lists
+- JSON payloads passed from `load(...)` into `loadLinks(...)`
+- Videasy source lookup/decryption into playable HLS/MP4 links
+- subtitle emission from the same source bundle
+
+Some original websites use private tokens, browser extensions, or blocked JavaScript APIs. For those, this shared runtime favors reliable CloudStream playback over brittle HTML scraping of a SPA shell.

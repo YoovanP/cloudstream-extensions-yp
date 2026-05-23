@@ -1,4 +1,4 @@
-import com.android.build.api.dsl.LibraryExtension
+﻿import com.android.build.api.dsl.LibraryExtension
 import com.lagradost.cloudstream3.gradle.CloudstreamExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
@@ -36,12 +36,18 @@ subprojects {
 
     cloudstream {
         setRepo(System.getenv("GITHUB_REPOSITORY") ?: "https://github.com/YoovanP/cloudstream-extensions-yp")
-        authors = listOf("YoovanP")
+        authors = listOf("local")
+        requiresResources = false
     }
 
     android {
-        namespace = "com.custom"
+        namespace = "com.local.scaffold"
         compileSdk = 35
+        sourceSets {
+            getByName("main") {
+                java.srcDir(rootProject.file("shared/src/main/kotlin"))
+            }
+        }
         defaultConfig {
             minSdk = 21
         }
@@ -52,6 +58,7 @@ subprojects {
     }
 
     tasks.withType<KotlinJvmCompile>().configureEach {
+        source(rootProject.file("shared/src/main/kotlin"))
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_1_8)
             freeCompilerArgs.addAll(
@@ -71,11 +78,13 @@ subprojects {
         implementation(kotlin("stdlib"))
         implementation("com.github.Blatzar:NiceHttp:0.4.17")
         implementation("org.jsoup:jsoup:1.22.1")
-        implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.20.1")
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
-        implementation("com.google.code.gson:gson:2.11.0")
-        implementation("org.json:json:20231013")
         implementation("androidx.annotation:annotation:1.10.0")
+    }
+
+    afterEvaluate {
+        cloudstream {
+            requiresResources = false
+        }
     }
 }
 

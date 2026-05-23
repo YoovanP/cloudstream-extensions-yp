@@ -1,6 +1,5 @@
-rootProject.name = "CloudstreamPlugins"
+﻿rootProject.name = "SiteScaffoldPack"
 
-// Auto-discovers any subdirectory that has a build.gradle.kts file
 val disabled = listOf<String>()
 
 File(rootDir, ".").eachDir { dir ->
