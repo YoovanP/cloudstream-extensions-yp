@@ -9,7 +9,7 @@
             "local"
         ],
         "description": "Scaffold module for Aether",
-        "fileSize": 67667,
+        "fileSize": 69192,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -17,7 +17,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-a9aa087e1e3eadd688af4d07077d9d39c881c2d4b39aba31ec708898a30115f9"
+        "fileHash": "sha256-ae4064e4a8c3e3b54fcb5dd41cdc35c99ce8a2a96705e7c68a9e8ab93c6df1c2"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/Anixtv.cs3",
@@ -29,7 +29,7 @@
             "local"
         ],
         "description": "Scaffold module for Anixtv",
-        "fileSize": 67667,
+        "fileSize": 69205,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -37,7 +37,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-25aee87f7a8bf29bd0b89970bf5e2a1ffdae4e777dfe67709288ed6cd96637ac"
+        "fileHash": "sha256-4ab09bd03ef490a7f933507ea15c9df6838ae776ac44300ddfe266cc84e53795"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/CineBolt.cs3",
@@ -49,7 +49,7 @@
             "local"
         ],
         "description": "Scaffold module for CineBolt",
-        "fileSize": 67674,
+        "fileSize": 69214,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -57,7 +57,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-dee2225e1fdd4b68a25805e6fb394c445aaef4f9ef53d8120c789230f4648be5"
+        "fileHash": "sha256-4d6deaaa60f3747eb69ad72a89921befe09e5e11cf0d6934be22a7cf51311341"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/Cineby.cs3",
@@ -69,7 +69,7 @@
             "local"
         ],
         "description": "Scaffold module for Cineby",
-        "fileSize": 67671,
+        "fileSize": 69204,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -77,7 +77,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-889912fa978c9d1338e4096c79e7b8b6934ab123b772cfe21397ff01c55ec6c5"
+        "fileHash": "sha256-78be6fa962796db7b385fda6b45414a8702ff9c65d418746ffb461b41977bbb0"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/Cinegram.cs3",
@@ -89,7 +89,7 @@
             "local"
         ],
         "description": "Scaffold module for Cinegram",
-        "fileSize": 67665,
+        "fileSize": 69213,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -97,7 +97,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-1c41aa3863aae6aca5e6364c136b386eae6f4330075e1b03b6079a071d0c9432"
+        "fileHash": "sha256-5ec3ad1ddeeaf3d69a0e8ed585715d37228ab1c4db20499118c7d849f6ad51fa"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/CinemaOS.cs3",
@@ -109,7 +109,7 @@
             "local"
         ],
         "description": "Scaffold module for CinemaOS",
-        "fileSize": 67669,
+        "fileSize": 69217,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -117,7 +117,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-040fe716014f5539fb940bfa05ddc1a68c9615a5b2a20156fafa6337dbc2a580"
+        "fileHash": "sha256-8b09b50e2a094fb6137e3557304a7bbbc2bdc75d56a0ea8d7728ea4774a0b305"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/Cinetaro.cs3",
@@ -129,7 +129,7 @@
             "local"
         ],
         "description": "Scaffold module for Cinetaro",
-        "fileSize": 67666,
+        "fileSize": 69205,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -137,7 +137,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-b9001756d2c0318d9899787e5c839eeb86d740caa1527893b4dfe6f180215942"
+        "fileHash": "sha256-c6ddd375fc4ad5d94482ec196e70f5ef2de64325e9e0aed258fa6405532eae4f"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/Cinezo.cs3",
@@ -149,7 +149,7 @@
             "local"
         ],
         "description": "Scaffold module for Cinezo",
-        "fileSize": 67671,
+        "fileSize": 69190,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -157,7 +157,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-0c4fb19792a07f86a9d64b1be66efadab40c73e19f227a4e30c047666e4e4311"
+        "fileHash": "sha256-a90eca65b09b6b29388a72f50645e68f346eb3f84534b0430a9ec724060d00eb"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/DuloTv.cs3",
@@ -169,7 +169,7 @@
             "local"
         ],
         "description": "Scaffold module for dulo.tv",
-        "fileSize": 67659,
+        "fileSize": 69194,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -177,7 +177,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-dcf68e1bf6e8607446557635b9648dbb86407b0d5c89076a8a7cd210fdeff0dc"
+        "fileHash": "sha256-4ee69c27f45c116eeccdfe92d0528a479c2de616ee79a803a5cc5bc70ee2c71f"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/EE3.cs3",
@@ -189,7 +189,7 @@
             "local"
         ],
         "description": "Scaffold module for EE3",
-        "fileSize": 67649,
+        "fileSize": 69179,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -197,7 +197,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-27037fd4e675d040f1c7c1525cd4b47e1625b7f5bb42e6ad91446e67639e908d"
+        "fileHash": "sha256-14ecb439fed8d3a68d6b5256757e24cd2b0641be75d1e1594d1e1430e08213ab"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/Filmex.cs3",
@@ -209,7 +209,7 @@
             "local"
         ],
         "description": "Scaffold module for Filmex",
-        "fileSize": 67667,
+        "fileSize": 69194,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -217,7 +217,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-097d3cd2b708cc50ef54d70fded3fe6b72505fda7c7a4df5132a8e202febe8d7"
+        "fileHash": "sha256-5283ab0ed01bc29f5e7e174d530a66b27e10593567bc009b26d3631263d689a8"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/FilmyTime.cs3",
@@ -229,7 +229,7 @@
             "local"
         ],
         "description": "Scaffold module for FilmyTime",
-        "fileSize": 67676,
+        "fileSize": 69205,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -237,7 +237,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-e3fac5ffd793df033ecd185462486ea4e03dbcba145413c6f4992bafdb0775f0"
+        "fileHash": "sha256-1966df6f090fbad6fd75d408329cb445a8685bca9d5100d0b3cd0cb625201050"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/FlickyStream.cs3",
@@ -249,7 +249,7 @@
             "local"
         ],
         "description": "Scaffold module for FlickyStream",
-        "fileSize": 67677,
+        "fileSize": 69211,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -257,7 +257,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-903065a945609fd490b677d30e0807401021797701c5993f5a05ff636c0a8862"
+        "fileHash": "sha256-208a6eecd03fd2e4db4f655ec1c0a66406689f5ec6fcdab88daaa1d3b7331179"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/Flixer.cs3",
@@ -269,7 +269,7 @@
             "local"
         ],
         "description": "Scaffold module for Flixer",
-        "fileSize": 67672,
+        "fileSize": 69206,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -277,7 +277,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-c4d51f4198bcfe91721cb9ebd2fff3577949adc55b3a8553d58e52c2d83192d5"
+        "fileHash": "sha256-b4af6ee333ed08a80ce988ea1841c969d1de1f7c1cb0c2d8db55099bd8e627d9"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/FlyX.cs3",
@@ -289,7 +289,7 @@
             "local"
         ],
         "description": "Scaffold module for FlyX",
-        "fileSize": 67668,
+        "fileSize": 69200,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -297,7 +297,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-a2c968ec2fefd1d24afc5655a0f58dc6309cc0e93ad530ca9be6509acbaecc33"
+        "fileHash": "sha256-6b25d08124ed79998f048f7337c8e931a4f9851686deae010cbc1536205a442f"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/IceFY.cs3",
@@ -309,7 +309,7 @@
             "local"
         ],
         "description": "Scaffold module for IceFY",
-        "fileSize": 67647,
+        "fileSize": 69213,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -317,7 +317,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-5c24b09cac6c132561ce86aa3f532518b64e024af8077591e5b19b3ca682418e"
+        "fileHash": "sha256-315bed4c5c73138664b4113339938cc6aa7ab52d0d075e780d180ceac57b3e7d"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/LordFlix.cs3",
@@ -329,7 +329,7 @@
             "local"
         ],
         "description": "Scaffold module for LordFlix",
-        "fileSize": 67660,
+        "fileSize": 69214,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -337,7 +337,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-5958b383548434c7f2b3a399a9171a1b7f4b54e50b19f7e2939c4d8264900dba"
+        "fileHash": "sha256-f3f8e784829e57ae67d06d15ab58cae5e6fa07a42b40f08fe51743faea12b495"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/M67Movies.cs3",
@@ -349,7 +349,7 @@
             "local"
         ],
         "description": "Scaffold module for 67Movies",
-        "fileSize": 67667,
+        "fileSize": 69208,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -357,7 +357,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-a89f595b108e5daa4006a38cabd2a35b1ecc48d0240db6cd8e025afd0207d2d5"
+        "fileHash": "sha256-4c36c33c37502c25030e1aada4bfda9e20518b8e7d04f620ff75f46a19a94795"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/NEPU.cs3",
@@ -369,7 +369,7 @@
             "local"
         ],
         "description": "Scaffold module for NEPU",
-        "fileSize": 67664,
+        "fileSize": 69198,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -377,7 +377,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-448a75f0dc2555e583c2369ad5fd4565d947e4c2962d39ba268084f94f069a28"
+        "fileHash": "sha256-a84c7abdb79092157d73730897399aaa5b49411925075bdaf23d1b885ff80efe"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/NexVid.cs3",
@@ -389,7 +389,7 @@
             "local"
         ],
         "description": "Scaffold module for NexVid",
-        "fileSize": 67666,
+        "fileSize": 69222,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -397,7 +397,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-bed9a6e04f9087e247c8f52201257804d6029bd397ca8eca9bdfeff5d49efddd"
+        "fileHash": "sha256-5eebdf1361f5d963882f3c6fb3dc73e7fda7472c03a7c0d561488dcfbc9ab5e1"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/PopcornMovies.cs3",
@@ -409,7 +409,7 @@
             "local"
         ],
         "description": "Scaffold module for PopcornMovies",
-        "fileSize": 67663,
+        "fileSize": 69208,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -417,7 +417,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-7e4ecc74b1dfece232741f49d80a8e3497ead735d3fb022e01693e0b9356524c"
+        "fileHash": "sha256-e30618d0a27a52e37032cbf1c6791ca573592c1166b21f2d9b545e69845de04f"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/Poprink.cs3",
@@ -429,7 +429,7 @@
             "local"
         ],
         "description": "Scaffold module for Poprink",
-        "fileSize": 67650,
+        "fileSize": 69215,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -437,7 +437,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-54112857f96594756354ad61deb7e459984d6541d977d6b342192f2afdbc8da3"
+        "fileHash": "sha256-38ecf7c47fcd773d65d377f37000717c5b03979835be249098aa9cbf90430b7a"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/PrimeShows.cs3",
@@ -449,7 +449,7 @@
             "local"
         ],
         "description": "Scaffold module for Primeshows",
-        "fileSize": 67669,
+        "fileSize": 69210,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -457,7 +457,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-8f5625f1518b4839eb4df230388f622919c6eb4c4d65b82a56b8373ca2b94b7b"
+        "fileHash": "sha256-8f8c9b809d2cdd8fcee54551d1ef097229173cf45cf70d7180739e81987bc916"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/PStreamFork.cs3",
@@ -469,7 +469,7 @@
             "local"
         ],
         "description": "Scaffold module for P-Stream (Fork)",
-        "fileSize": 67680,
+        "fileSize": 69229,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -477,7 +477,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-1526fe332a48b35e1b988d3d684e66154fff66336ddd6972788aba8073d05613"
+        "fileHash": "sha256-8618c8dd0272c06ad994d5b3ef87f50aa2dbb355ae16a95ea6dccb381841c384"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/Rive.cs3",
@@ -489,7 +489,7 @@
             "local"
         ],
         "description": "Scaffold module for Rive",
-        "fileSize": 67652,
+        "fileSize": 69192,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -497,7 +497,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-d5456d96ac28dfcc8740a39b0eab0f73b1f3b52d79599f6bfd7482b87aa04087"
+        "fileHash": "sha256-9cf259142de2fd9b69cbd47d8801e59fcc42d3eeca6bb75a723ff963c0611b53"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/SanuFlix.cs3",
@@ -509,7 +509,7 @@
             "local"
         ],
         "description": "Scaffold module for SanuFlix",
-        "fileSize": 67686,
+        "fileSize": 69232,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -517,7 +517,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-bed54b51c8c509dc063d5d5209f65c3d97e8345731b899851e7b076390a07e0e"
+        "fileHash": "sha256-71cd18ad795c75098c43cd45625d82c9fbd27156ce43175e164dc7e4e6da9f85"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/ShuttleTV.cs3",
@@ -529,7 +529,7 @@
             "local"
         ],
         "description": "Scaffold module for ShuttleTV",
-        "fileSize": 67675,
+        "fileSize": 69184,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -537,7 +537,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-770df419b0432c915a90d07d9dd98128c59f9e176599099e27b8a60dd4c6972b"
+        "fileHash": "sha256-91ee0bbc4ee9b49568e4ede116f4e5be27e9c2ffeb7263d9c7e75900c04c9417"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/SpenFlix.cs3",
@@ -549,7 +549,7 @@
             "local"
         ],
         "description": "Scaffold module for SpenFlix",
-        "fileSize": 67675,
+        "fileSize": 69203,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -557,7 +557,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-e2680dcff1ed2ba925760101557f330212ac214e74104ca8669b005a7ea002ef"
+        "fileHash": "sha256-891f5f4365b4d94994969818c7762f2246df9a39a3a233e7009d0a5ff38a0424"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/VoidFlix.cs3",
@@ -569,7 +569,7 @@
             "local"
         ],
         "description": "Scaffold module for VoidFlix",
-        "fileSize": 67680,
+        "fileSize": 69197,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -577,7 +577,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-592bb05a0db3f0b2c37a7d7d1520e66e59874aead96e4cf41fc402bde06e5f08"
+        "fileHash": "sha256-9ba38c0a45b39f07b3331e3c7636b9e6aa99b669b03dab620d142f2115dd9926"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/XPrime.cs3",
@@ -589,7 +589,7 @@
             "local"
         ],
         "description": "Scaffold module for XPrime",
-        "fileSize": 67666,
+        "fileSize": 69172,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -597,7 +597,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-ba967b4f001e35286ea33db623f2521cf9a63562a31803447404179a4cdeb98d"
+        "fileHash": "sha256-379af7c8aad295d8a64d6b13b6321346a0a69c219eef323e81f86cc5d8d99cd5"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/YFlix.cs3",
@@ -609,7 +609,7 @@
             "local"
         ],
         "description": "Scaffold module for yFlix",
-        "fileSize": 67678,
+        "fileSize": 69187,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -617,7 +617,7 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-997c2415449f972a6b3379c31d07acb764d80039f4b1e4fb5f7434f1804c2daf"
+        "fileHash": "sha256-5975b0129363492de9ae7c704c833ce0fb0433c08554e47ccfca636fe79a6e8c"
     },
     {
         "url": "https://raw.githubusercontent.com/YoovanP/cloudstream-extensions-yp/builds/ZetMoon.cs3",
@@ -629,7 +629,7 @@
             "local"
         ],
         "description": "Scaffold module for ZetMoon",
-        "fileSize": 67672,
+        "fileSize": 69181,
         "repositoryUrl": "https://github.com/YoovanP/cloudstream-extensions-yp",
         "language": "en",
         "tvTypes": [
@@ -637,6 +637,6 @@
             "TvSeries"
         ],
         "apiVersion": 1,
-        "fileHash": "sha256-06c5997568785add92cc26934b032a18d4e56c625e6fbfb51c206be8d9451e0d"
+        "fileHash": "sha256-f765e25f1b9de740633290a83df54d7ddfaef200d6393c3ed1b9d252d0f66e00"
     }
 ]
