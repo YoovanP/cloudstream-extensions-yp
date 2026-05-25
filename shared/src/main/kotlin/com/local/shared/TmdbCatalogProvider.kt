@@ -24,6 +24,7 @@ import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.ExtractorLinkType
 import com.lagradost.cloudstream3.utils.Qualities
 import com.lagradost.cloudstream3.utils.getQualityFromName
+import com.lagradost.cloudstream3.utils.loadExtractor
 import com.lagradost.cloudstream3.utils.newExtractorLink
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
@@ -137,6 +138,7 @@ open class TmdbCatalogProvider(
         if (invokeVideasy(streamData, subtitleCallback, callback)) found = true
         if (invokeVidlink(streamData, callback)) found = true
         if (invokeVidFastPro(streamData, subtitleCallback, callback)) found = true
+        if (invokeAutoembed(streamData, subtitleCallback, callback)) found = true
 
         return found
     }
@@ -347,26 +349,13 @@ open class TmdbCatalogProvider(
             ).parsedSafe<VidFastServersResponse>()?.result.orEmpty()
         }.getOrDefault(emptyList())
 
-        val preferredServers = servers.filter { it.name in vidfastPreferredServers }
-        var found = invokeVidFastServers(
-            servers = preferredServers.takeIf { it.isNotEmpty() } ?: servers,
+        return invokeVidFastServers(
+            servers = servers.prioritizedVidFastServers(),
             streamBaseUrl = streamBaseUrl,
             headers = headers,
             subtitleCallback = subtitleCallback,
             callback = callback,
         )
-        if (!found && preferredServers.isNotEmpty()) {
-            val fallbackServers = servers.filterNot { it.name in vidfastPreferredServers }
-            found = invokeVidFastServers(
-                servers = fallbackServers,
-                streamBaseUrl = streamBaseUrl,
-                headers = headers,
-                subtitleCallback = subtitleCallback,
-                callback = callback,
-            )
-        }
-
-        return found
     }
 
     private suspend fun invokeVidFastServers(
@@ -417,6 +406,51 @@ open class TmdbCatalogProvider(
         }
 
         return found
+    }
+
+    private suspend fun invokeAutoembed(
+        data: TmdbStreamData,
+        subtitleCallback: (SubtitleFile) -> Unit,
+        callback: (ExtractorLink) -> Unit,
+    ): Boolean {
+        val imdbId = data.imdbId?.takeIf { it.isNotBlank() } ?: return false
+        val pageUrl = if (data.season == null) {
+            "$autoembedApi/embed/movie/$imdbId"
+        } else {
+            "$autoembedApi/embed/tv/$imdbId/${data.season}/${data.episode.orEmpty()}"
+        }
+        val headers = mapOf(
+            "User-Agent" to USER_AGENT,
+            "Referer" to "$autoembedApi/",
+        )
+
+        val page = runCatching {
+            app.get(pageUrl, headers = headers, timeout = 12_000L).text
+        }.getOrNull().orEmpty()
+        if (page.isBlank()) return false
+
+        val embedUrl = Regex("""var\s+embedUrlValue\s*=\s*"([^"]+)";""")
+            .find(page)
+            ?.groupValues
+            ?.get(1)
+            ?: Regex("""https?:\\?/\\?/cloudnestra\.com/rcp/[^"'<\s]+""")
+                .find(page)
+                ?.value
+                ?.replace("\\/", "/")
+
+        return embedUrl
+            ?.takeIf { it.isNotBlank() }
+            ?.let { loadExtractor(it, pageUrl, subtitleCallback, callback) }
+            ?: false
+    }
+
+    private fun List<VidFastServerInfo>.prioritizedVidFastServers(): List<VidFastServerInfo> {
+        return sortedWith(
+            compareBy<VidFastServerInfo> { server ->
+                val index = vidfastPreferredServerOrder.indexOf(server.name)
+                if (index == -1) Int.MAX_VALUE else index
+            }.thenBy { it.name.orEmpty() }
+        )
     }
 
     private fun String.mediaTypeFromPath(): String {
@@ -601,23 +635,26 @@ open class TmdbCatalogProvider(
         private const val videasyApi = "https://api.videasy.net"
         private const val vidlinkApi = "https://vidlink.pro"
         private const val vidfastApi = "https://vidfast.pro"
+        private const val autoembedApi = "https://player.autoembed.app"
         private const val decryptApi = "https://enc-dec.app/api"
         private const val tmdbReadToken =
             "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1YjEwYWNhZDFhNjY3ZTQwMDEyMGVjMTc1ZDBjZTFmZCIsIm5iZiI6MTcyNDk1Mjg3MC45NDA4NDcsInN1YiI6IjY2ZDBhOTgyODQ1OWYzM2FmMjBmYjdkNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ScGHs1VZTLGpUKWPG7EA-2T29OPcqW_qpJjKL5Yhrjc"
         private val videasyMovieServers = listOf(
             "cdn",
-            "hdmovie",
         )
         private val videasyTvServers = listOf(
             "cdn",
         )
-        private val vidfastPreferredServers = setOf(
+        private val vidfastPreferredServerOrder = listOf(
             "Alpha",
             "vEdge",
             "Mega",
             "vFast",
             "Max",
             "Cobra",
+            "vRapid",
+            "Beta",
+            "Vodka",
         )
     }
 }
