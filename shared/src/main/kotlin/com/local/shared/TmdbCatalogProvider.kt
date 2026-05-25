@@ -137,8 +137,8 @@ open class TmdbCatalogProvider(
 
         if (invokeVideasy(streamData, subtitleCallback, callback)) found = true
         if (invokeVidlink(streamData, callback)) found = true
-        if (invokeVidFastPro(streamData, subtitleCallback, callback)) found = true
         if (invokeAutoembed(streamData, subtitleCallback, callback)) found = true
+        if (!found && invokeVidFastPro(streamData, subtitleCallback, callback)) found = true
 
         return found
     }
@@ -350,7 +350,7 @@ open class TmdbCatalogProvider(
         }.getOrDefault(emptyList())
 
         return invokeVidFastServers(
-            servers = servers.prioritizedVidFastServers(),
+            servers = servers.prioritizedVidFastServers(isTv = data.season != null),
             streamBaseUrl = streamBaseUrl,
             headers = headers,
             subtitleCallback = subtitleCallback,
@@ -444,10 +444,13 @@ open class TmdbCatalogProvider(
             ?: false
     }
 
-    private fun List<VidFastServerInfo>.prioritizedVidFastServers(): List<VidFastServerInfo> {
-        return sortedWith(
+    private fun List<VidFastServerInfo>.prioritizedVidFastServers(isTv: Boolean): List<VidFastServerInfo> {
+        val priority = if (isTv) vidfastTvServerOrder else vidfastMovieServerOrder
+        val verifiedServers = filter { it.name in priority }
+        val candidates = verifiedServers.takeIf { it.isNotEmpty() } ?: this
+        return candidates.sortedWith(
             compareBy<VidFastServerInfo> { server ->
-                val index = vidfastPreferredServerOrder.indexOf(server.name)
+                val index = priority.indexOf(server.name)
                 if (index == -1) Int.MAX_VALUE else index
             }.thenBy { it.name.orEmpty() }
         )
@@ -645,15 +648,25 @@ open class TmdbCatalogProvider(
         private val videasyTvServers = listOf(
             "cdn",
         )
-        private val vidfastPreferredServerOrder = listOf(
+        private val vidfastMovieServerOrder = listOf(
+            "Alpha",
+            "vEdge",
+            "vRapid",
+            "Mega",
+            "vFast",
+            "Max",
+            "Beta",
+            "Cobra",
+            "Vodka",
+        )
+        private val vidfastTvServerOrder = listOf(
             "Alpha",
             "vEdge",
             "Mega",
             "vFast",
             "Max",
-            "Cobra",
-            "vRapid",
             "Beta",
+            "Cobra",
             "Vodka",
         )
     }
