@@ -132,7 +132,13 @@ open class TmdbCatalogProvider(
         callback: (ExtractorLink) -> Unit
     ): Boolean {
         val streamData = runCatching { parseJson<TmdbStreamData>(data) }.getOrNull() ?: return false
-        return invokeVideasy(streamData, subtitleCallback, callback)
+        var found = false
+
+        if (invokeVideasy(streamData, subtitleCallback, callback)) found = true
+        if (invokeVidlink(streamData, callback)) found = true
+        if (invokeVidFastPro(streamData, subtitleCallback, callback)) found = true
+
+        return found
     }
 
     private suspend fun loadSeasonEpisodes(
@@ -201,8 +207,9 @@ open class TmdbCatalogProvider(
 
         val encodedTitle = data.title.urlEncode().urlEncode()
         var found = false
+        val servers = if (data.season == null) videasyMovieServers else videasyTvServers
 
-        for (server in videasyServers) {
+        for (server in servers) {
             val sourceUrl = if (data.season == null) {
                 "$videasyApi/$server/sources-with-title?title=$encodedTitle&mediaType=movie&year=${data.year.orEmpty()}&tmdbId=${data.tmdbId}&imdbId=${data.imdbId.orEmpty()}"
             } else {
@@ -244,6 +251,169 @@ open class TmdbCatalogProvider(
                 val language = subtitle.language ?: subtitle.lang ?: "Subtitle"
                 subtitleCallback(newSubtitleFile(language, url))
             }
+        }
+
+        return found
+    }
+
+    private suspend fun invokeVidlink(
+        data: TmdbStreamData,
+        callback: (ExtractorLink) -> Unit,
+    ): Boolean {
+        val tmdbId = data.tmdbId ?: return false
+        val encodedId = runCatching {
+            app.get("$decryptApi/enc-vidlink?text=$tmdbId", timeout = 20_000L)
+                .parsedSafe<VidlinkEncodeResponse>()
+                ?.result
+        }.getOrNull() ?: return false
+
+        val headers = mapOf(
+            "User-Agent" to USER_AGENT,
+            "Connection" to "keep-alive",
+            "Referer" to "$vidlinkApi/",
+            "Origin" to vidlinkApi,
+        )
+
+        val streamUrl = if (data.season == null) {
+            "$vidlinkApi/api/b/movie/$encodedId"
+        } else {
+            "$vidlinkApi/api/b/tv/$encodedId/${data.season}/${data.episode.orEmpty()}"
+        }
+
+        val playlist = runCatching {
+            app.get(streamUrl, headers = headers, timeout = 20_000L)
+                .parsedSafe<VidlinkResponse>()
+                ?.stream
+                ?.playlist
+        }.getOrNull()?.takeIf { it.isNotBlank() } ?: return false
+
+        callback(
+            newExtractorLink(
+                source = "$siteTitle Vidlink",
+                name = "$siteTitle Vidlink",
+                url = playlist,
+                type = playlist.toExtractorType()
+            ) {
+                quality = Qualities.Unknown.value
+                this.headers = headers
+            }
+        )
+
+        return true
+    }
+
+    private suspend fun invokeVidFastPro(
+        data: TmdbStreamData,
+        subtitleCallback: (SubtitleFile) -> Unit,
+        callback: (ExtractorLink) -> Unit,
+    ): Boolean {
+        val tmdbId = data.tmdbId ?: return false
+        val pageUrl = if (data.season == null) {
+            "$vidfastApi/movie/$tmdbId"
+        } else {
+            "$vidfastApi/tv/$tmdbId/${data.season}/${data.episode.orEmpty()}"
+        }
+        val headers = mutableMapOf(
+            "User-Agent" to USER_AGENT,
+            "Referer" to "$vidfastApi/",
+            "X-Requested-With" to "XMLHttpRequest",
+        )
+
+        val encodedText = runCatching {
+            val page = app.get(pageUrl, headers = headers, timeout = 20_000L).text
+            Regex("""\\"en\\":\\"(.*?)\\"""").find(page)?.groupValues?.get(1)
+        }.getOrNull()?.takeIf { it.isNotBlank() } ?: return false
+
+        val decoded = runCatching {
+            app.get("$decryptApi/enc-vidfast?text=${encodedText.urlEncode()}&version=1", timeout = 20_000L)
+                .parsedSafe<VidFastDecodeResponse>()
+                ?.result
+        }.getOrNull() ?: return false
+
+        val serversUrl = decoded.servers ?: return false
+        val streamBaseUrl = decoded.stream ?: return false
+        val token = decoded.token ?: return false
+        headers["X-CSRF-Token"] = token
+
+        val serversEncrypted = runCatching {
+            app.post(serversUrl, headers = headers, timeout = 20_000L).text
+        }.getOrNull()?.takeIf { it.isNotBlank() } ?: return false
+
+        val servers = runCatching {
+            app.post(
+                "$decryptApi/dec-vidfast",
+                json = mapOf("text" to serversEncrypted, "version" to "1"),
+                timeout = 20_000L
+            ).parsedSafe<VidFastServersResponse>()?.result.orEmpty()
+        }.getOrDefault(emptyList())
+
+        val preferredServers = servers.filter { it.name in vidfastPreferredServers }
+        var found = invokeVidFastServers(
+            servers = preferredServers.takeIf { it.isNotEmpty() } ?: servers,
+            streamBaseUrl = streamBaseUrl,
+            headers = headers,
+            subtitleCallback = subtitleCallback,
+            callback = callback,
+        )
+        if (!found && preferredServers.isNotEmpty()) {
+            val fallbackServers = servers.filterNot { it.name in vidfastPreferredServers }
+            found = invokeVidFastServers(
+                servers = fallbackServers,
+                streamBaseUrl = streamBaseUrl,
+                headers = headers,
+                subtitleCallback = subtitleCallback,
+                callback = callback,
+            )
+        }
+
+        return found
+    }
+
+    private suspend fun invokeVidFastServers(
+        servers: List<VidFastServerInfo>,
+        streamBaseUrl: String,
+        headers: Map<String, String>,
+        subtitleCallback: (SubtitleFile) -> Unit,
+        callback: (ExtractorLink) -> Unit,
+    ): Boolean {
+        var found = false
+        servers.forEach { server ->
+            val serverHash = server.data ?: return@forEach
+            val encrypted = runCatching {
+                app.post("$streamBaseUrl/$serverHash", headers = headers, timeout = 20_000L).text
+            }.getOrNull()?.takeIf { it.isNotBlank() } ?: return@forEach
+
+            val stream = runCatching {
+                app.post(
+                    "$decryptApi/dec-vidfast",
+                    json = mapOf("text" to encrypted, "version" to "1"),
+                    timeout = 20_000L
+                ).parsedSafe<VidFastStreamResponse>()?.result
+            }.getOrNull() ?: return@forEach
+
+            stream.tracks.orEmpty().forEach { track ->
+                val file = track.file ?: return@forEach
+                val label = track.label ?: "Subtitle"
+                subtitleCallback(newSubtitleFile(label, file))
+            }
+
+            val fileUrl = stream.url?.takeIf { it.isNotBlank() } ?: return@forEach
+            callback(
+                newExtractorLink(
+                    source = "$siteTitle VidFast",
+                    name = "$siteTitle VidFast ${server.name.orEmpty()} ${server.description.orEmpty()}".trim(),
+                    url = fileUrl,
+                    type = fileUrl.toExtractorType()
+                ) {
+                    this.headers = headers
+                    quality = if (stream.`4kAvailable` == true || server.description?.contains("4K", true) == true) {
+                        Qualities.P2160.value
+                    } else {
+                        Qualities.P1080.value
+                    }
+                }
+            )
+            found = true
         }
 
         return found
@@ -379,21 +549,75 @@ open class TmdbCatalogProvider(
         val url: String? = null,
     )
 
+    data class VidlinkEncodeResponse(
+        val result: String? = null,
+    )
+
+    data class VidlinkResponse(
+        val stream: VidlinkStream? = null,
+    )
+
+    data class VidlinkStream(
+        val playlist: String? = null,
+    )
+
+    data class VidFastDecodeResponse(
+        val result: VidFastDecodeResult? = null,
+    )
+
+    data class VidFastDecodeResult(
+        val servers: String? = null,
+        val stream: String? = null,
+        val token: String? = null,
+    )
+
+    data class VidFastServersResponse(
+        val result: List<VidFastServerInfo> = emptyList(),
+    )
+
+    data class VidFastServerInfo(
+        val name: String? = null,
+        val description: String? = null,
+        val data: String? = null,
+    )
+
+    data class VidFastStreamResponse(
+        val result: VidFastStream? = null,
+    )
+
+    data class VidFastStream(
+        val url: String? = null,
+        val tracks: List<VidFastTrack> = emptyList(),
+        val `4kAvailable`: Boolean? = null,
+    )
+
+    data class VidFastTrack(
+        val file: String? = null,
+        val label: String? = null,
+    )
+
     companion object {
         private const val tmdbApi = "https://api.themoviedb.org/3"
         private const val videasyApi = "https://api.videasy.net"
+        private const val vidlinkApi = "https://vidlink.pro"
+        private const val vidfastApi = "https://vidfast.pro"
         private const val decryptApi = "https://enc-dec.app/api"
         private const val tmdbReadToken =
             "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1YjEwYWNhZDFhNjY3ZTQwMDEyMGVjMTc1ZDBjZTFmZCIsIm5iZiI6MTcyNDk1Mjg3MC45NDA4NDcsInN1YiI6IjY2ZDBhOTgyODQ1OWYzM2FmMjBmYjdkNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ScGHs1VZTLGpUKWPG7EA-2T29OPcqW_qpJjKL5Yhrjc"
-        private val videasyServers = listOf(
-            "myflixerzupcloud",
-            "1movies",
-            "moviebox",
-            "primewire",
-            "m4uhd",
-            "hdmovie",
+        private val videasyMovieServers = listOf(
             "cdn",
-            "primesrcme",
+            "hdmovie",
+        )
+        private val videasyTvServers = listOf(
+            "cdn",
+        )
+        private val vidfastPreferredServers = setOf(
+            "Alpha",
+            "vEdge",
+            "Mega",
+            "vFast",
+            "Max",
+            "Cobra",
         )
     }
 }
