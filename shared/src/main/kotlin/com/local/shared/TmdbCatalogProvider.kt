@@ -137,7 +137,9 @@ open class TmdbCatalogProvider(
 
         if (invokeVideasy(streamData, subtitleCallback, callback)) found = true
         if (invokeVidlink(streamData, callback)) found = true
+        if (invokeXpass(streamData, callback)) found = true
         if (invokeAutoembed(streamData, subtitleCallback, callback)) found = true
+        if (!found && invokeProjectFreeTv(streamData, subtitleCallback, callback)) found = true
         if (!found && invokeVidFastPro(streamData, subtitleCallback, callback)) found = true
 
         return found
@@ -408,6 +410,100 @@ open class TmdbCatalogProvider(
         return found
     }
 
+    private suspend fun invokeXpass(
+        data: TmdbStreamData,
+        callback: (ExtractorLink) -> Unit,
+    ): Boolean {
+        val tmdbId = data.tmdbId ?: return false
+        val embedUrl = if (data.season == null) {
+            "$xpassApi/e/movie/$tmdbId"
+        } else {
+            "$xpassApi/e/tv/$tmdbId/${data.season}/${data.episode.orEmpty()}"
+        }
+        val headers = mapOf(
+            "User-Agent" to USER_AGENT,
+            "Referer" to "$xpassApi/",
+        )
+
+        val page = runCatching {
+            app.get(embedUrl, headers = headers, timeout = 12_000L).text
+        }.getOrNull().orEmpty()
+        val backupsJson = page.extractJsonArrayAfter("var backups=") ?: return false
+        val backups = runCatching { parseJson<List<XpassBackup>>(backupsJson) }.getOrDefault(emptyList())
+
+        val seen = mutableSetOf<String>()
+        var found = false
+        backups.forEach { backup ->
+            val playlistPath = backup.url?.takeIf { it.isNotBlank() } ?: return@forEach
+            val playlistUrl = if (playlistPath.startsWith("http", true)) playlistPath else "$xpassApi$playlistPath"
+            val playlist = runCatching {
+                app.get(playlistUrl, headers = headers, timeout = 8_000L).parsedSafe<XpassPlaylistResponse>()
+            }.getOrNull() ?: return@forEach
+
+            playlist.playlist
+                .flatMap { it.sources.orEmpty() }
+                .forEach { source ->
+                    val file = source.file?.takeIf { it.startsWith("http", true) } ?: return@forEach
+                    if (file.contains("/video/error", true) || !seen.add(file)) return@forEach
+                    callback(
+                        newExtractorLink(
+                            source = "$siteTitle Xpass",
+                            name = "$siteTitle Xpass ${backup.name.orEmpty()} ${source.label.orEmpty()}".trim(),
+                            url = file,
+                            type = if (source.type?.contains("hls", true) == true || file.contains(".m3u8", true)) {
+                                ExtractorLinkType.M3U8
+                            } else {
+                                file.toExtractorType()
+                            }
+                        ) {
+                            this.headers = headers
+                            quality = getQualityFromName(source.label ?: file).takeIf { it != Qualities.Unknown.value }
+                                ?: Qualities.Unknown.value
+                        }
+                    )
+                    found = true
+                }
+        }
+
+        return found
+    }
+
+    private suspend fun invokeProjectFreeTv(
+        data: TmdbStreamData,
+        subtitleCallback: (SubtitleFile) -> Unit,
+        callback: (ExtractorLink) -> Unit,
+    ): Boolean {
+        val title = data.title?.takeIf { it.isNotBlank() } ?: return false
+        val query = if (data.season == null) {
+            title
+        } else {
+            "$title - season ${data.season}"
+        }.urlEncode().replace("%20", "+")
+        val searchUrl = "$projectFreeTvApi/data/browse/?lang=3&keyword=$query&year=${data.year.orEmpty()}&networks=&rating=&votes=&genre=&country=&cast=&directors=&type=&order_by=&page=1&limit=1"
+
+        val search = runCatching {
+            app.get(searchUrl, referer = projectFreeTvApi, timeout = 12_000L).parsedSafe<ProjectFreeTvBrowseResponse>()
+        }.getOrNull()
+        val id = search?.movies.orEmpty().firstOrNull()?._id ?: return false
+        val watch = runCatching {
+            app.get("$projectFreeTvApi/data/watch/?_id=$id", referer = projectFreeTvApi, timeout = 12_000L)
+                .parsedSafe<ProjectFreeTvWatchResponse>()
+        }.getOrNull() ?: return false
+
+        var found = false
+        watch.streams
+            .orEmpty()
+            .filter { stream -> data.episode == null || stream.e == null || stream.e == data.episode }
+            .mapNotNull { it.stream?.takeIf { url -> url.startsWith("http", true) } }
+            .distinct()
+            .take(30)
+            .forEach { url ->
+                if (loadExtractor(url, projectFreeTvApi, subtitleCallback, callback)) found = true
+            }
+
+        return found
+    }
+
     private suspend fun invokeAutoembed(
         data: TmdbStreamData,
         subtitleCallback: (SubtitleFile) -> Unit,
@@ -454,6 +550,35 @@ open class TmdbCatalogProvider(
                 if (index == -1) Int.MAX_VALUE else index
             }.thenBy { it.name.orEmpty() }
         )
+    }
+
+    private fun String.extractJsonArrayAfter(marker: String): String? {
+        val start = indexOf(marker).takeIf { it >= 0 }?.plus(marker.length) ?: return null
+        var depth = 0
+        var inString = false
+        var escaped = false
+
+        for (index in start until length) {
+            val char = this[index]
+            if (inString) {
+                when {
+                    escaped -> escaped = false
+                    char == '\\' -> escaped = true
+                    char == '"' -> inString = false
+                }
+            } else {
+                when (char) {
+                    '"' -> inString = true
+                    '[' -> depth++
+                    ']' -> {
+                        depth--
+                        if (depth == 0) return substring(start, index + 1)
+                    }
+                }
+            }
+        }
+
+        return null
     }
 
     private fun String.mediaTypeFromPath(): String {
@@ -633,12 +758,50 @@ open class TmdbCatalogProvider(
         val label: String? = null,
     )
 
+    data class XpassBackup(
+        val name: String? = null,
+        val url: String? = null,
+    )
+
+    data class XpassPlaylistResponse(
+        val playlist: List<XpassPlaylistItem> = emptyList(),
+    )
+
+    data class XpassPlaylistItem(
+        val sources: List<XpassSource> = emptyList(),
+    )
+
+    data class XpassSource(
+        val file: String? = null,
+        val type: String? = null,
+        val label: String? = null,
+    )
+
+    data class ProjectFreeTvBrowseResponse(
+        val movies: List<ProjectFreeTvMovie> = emptyList(),
+    )
+
+    data class ProjectFreeTvMovie(
+        val _id: String? = null,
+    )
+
+    data class ProjectFreeTvWatchResponse(
+        val streams: List<ProjectFreeTvStream> = emptyList(),
+    )
+
+    data class ProjectFreeTvStream(
+        val stream: String? = null,
+        val e: Int? = null,
+    )
+
     companion object {
         private const val tmdbApi = "https://api.themoviedb.org/3"
         private const val videasyApi = "https://api.videasy.net"
         private const val vidlinkApi = "https://vidlink.pro"
         private const val vidfastApi = "https://vidfast.pro"
         private const val autoembedApi = "https://player.autoembed.app"
+        private const val xpassApi = "https://play.xpass.top"
+        private const val projectFreeTvApi = "https://projectfreetv.sx"
         private const val decryptApi = "https://enc-dec.app/api"
         private const val tmdbReadToken =
             "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1YjEwYWNhZDFhNjY3ZTQwMDEyMGVjMTc1ZDBjZTFmZCIsIm5iZiI6MTcyNDk1Mjg3MC45NDA4NDcsInN1YiI6IjY2ZDBhOTgyODQ1OWYzM2FmMjBmYjdkNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ScGHs1VZTLGpUKWPG7EA-2T29OPcqW_qpJjKL5Yhrjc"
