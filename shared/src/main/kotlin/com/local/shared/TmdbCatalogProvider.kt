@@ -138,8 +138,9 @@ open class TmdbCatalogProvider(
         if (invokeVideasy(streamData, subtitleCallback, callback)) found = true
         if (invokeVidlink(streamData, callback)) found = true
         if (invokeXpass(streamData, callback)) found = true
+        if (invokeStremioHttps(streamData, subtitleCallback, callback)) found = true
         if (invokeAutoembed(streamData, subtitleCallback, callback)) found = true
-        if (!found && invokeProjectFreeTv(streamData, subtitleCallback, callback)) found = true
+        if (invokeProjectFreeTv(streamData, subtitleCallback, callback)) found = true
         if (!found && invokeVidFastPro(streamData, subtitleCallback, callback)) found = true
 
         return found
@@ -468,6 +469,62 @@ open class TmdbCatalogProvider(
         return found
     }
 
+    private suspend fun invokeStremioHttps(
+        data: TmdbStreamData,
+        subtitleCallback: (SubtitleFile) -> Unit,
+        callback: (ExtractorLink) -> Unit,
+    ): Boolean {
+        val imdbId = data.imdbId?.takeIf { it.isNotBlank() } ?: return false
+        val streamPath = if (data.season == null) {
+            "stream/movie/$imdbId.json"
+        } else {
+            "stream/series/$imdbId:${data.season}:${data.episode.orEmpty()}.json"
+        }
+
+        val seen = mutableSetOf<String>()
+        var found = false
+        stremioHttpsAddons.forEach { (sourceName, api) ->
+            val response = runCatching {
+                app.get("$api/$streamPath", timeout = 25_000L).parsedSafe<StremioStreamResponse>()
+            }.getOrNull() ?: return@forEach
+
+            response.streams
+                .asSequence()
+                .filterNot { it.isBlockedStremioStream() }
+                .mapNotNull { stream ->
+                    val streamUrl = stream.url?.takeIf { url ->
+                        url.startsWith("http", true) && seen.add(url)
+                    } ?: return@mapNotNull null
+                    stream to streamUrl
+                }
+                .forEach { (stream, streamUrl) ->
+                    val title = stream.description ?: stream.title ?: stream.name.orEmpty()
+                    val label = title.lineSequence().firstOrNull { it.isNotBlank() } ?: sourceName
+                    callback(
+                        newExtractorLink(
+                            source = "$siteTitle $sourceName",
+                            name = "$siteTitle $sourceName $label".trim(),
+                            url = streamUrl,
+                            type = streamUrl.stremioExtractorType(sourceName, title)
+                        ) {
+                            headers = stream.toRequestHeaders()
+                            quality = getQualityFromName(title).takeIf { it != Qualities.Unknown.value }
+                                ?: Qualities.Unknown.value
+                        }
+                    )
+                    found = true
+
+                    stream.subtitles.orEmpty().forEach { subtitle ->
+                        val subtitleUrl = subtitle.url?.takeIf { it.startsWith("http", true) } ?: return@forEach
+                        val language = subtitle.lang ?: "Subtitle"
+                        subtitleCallback(newSubtitleFile(language, subtitleUrl))
+                    }
+                }
+        }
+
+        return found
+    }
+
     private suspend fun invokeProjectFreeTv(
         data: TmdbStreamData,
         subtitleCallback: (SubtitleFile) -> Unit,
@@ -538,6 +595,51 @@ open class TmdbCatalogProvider(
             ?.takeIf { it.isNotBlank() }
             ?.let { loadExtractor(it, pageUrl, subtitleCallback, callback) }
             ?: false
+    }
+
+    private fun StremioStream.isBlockedStremioStream(): Boolean {
+        val streamUrl = url.orEmpty()
+        val label = "${name.orEmpty()} ${title.orEmpty()} ${description.orEmpty()}"
+        return streamUrl.isBlank() ||
+            streamUrl.contains("github.com", true) ||
+            streamUrl.contains("googleusercontent", true) ||
+            streamUrl.contains("youtube.com", true) ||
+            streamUrl.contains("youtu.be", true) ||
+            label.contains("trailer", true) ||
+            label.contains("redirecting", true) ||
+            listOf("4KHDHub", "Instant Download", "IOSMIRROR", "XDM").any { label.contains(it, true) }
+    }
+
+    private fun StremioStream.toRequestHeaders(): Map<String, String> {
+        val proxyHeaders = behaviorHints?.proxyHeaders?.request
+        val standardHeaders = behaviorHints?.headers.orEmpty()
+        return mapOf(
+            "User-Agent" to (proxyHeaders?.get("User-Agent")
+                ?: proxyHeaders?.get("user-agent")
+                ?: standardHeaders["User-Agent"]
+                ?: standardHeaders["user-agent"]
+                ?: USER_AGENT),
+            "Referer" to (proxyHeaders?.get("Referer")
+                ?: proxyHeaders?.get("referer")
+                ?: standardHeaders["Referer"]
+                ?: standardHeaders["referer"]
+                ?: ""),
+            "Origin" to (proxyHeaders?.get("Origin")
+                ?: proxyHeaders?.get("origin")
+                ?: standardHeaders["Origin"]
+                ?: standardHeaders["origin"]
+                ?: ""),
+        ).filterValues { it.isNotBlank() }
+    }
+
+    private fun String.stremioExtractorType(sourceName: String, title: String): ExtractorLinkType {
+        return when {
+            sourceName.equals("NoTorrent", true) -> ExtractorLinkType.M3U8
+            contains(".m3u8", true) || contains("/playlist", true) -> ExtractorLinkType.M3U8
+            contains("cf-master", true) || endsWith(".txt", true) -> ExtractorLinkType.M3U8
+            title.contains("hls", true) || title.contains("m3u8", true) -> ExtractorLinkType.M3U8
+            else -> toExtractorType()
+        }
     }
 
     private fun List<VidFastServerInfo>.prioritizedVidFastServers(isTv: Boolean): List<VidFastServerInfo> {
@@ -794,6 +896,33 @@ open class TmdbCatalogProvider(
         val e: Int? = null,
     )
 
+    data class StremioStreamResponse(
+        val streams: List<StremioStream> = emptyList(),
+    )
+
+    data class StremioStream(
+        val name: String? = null,
+        val title: String? = null,
+        val description: String? = null,
+        val url: String? = null,
+        val subtitles: List<StremioSubtitle> = emptyList(),
+        val behaviorHints: StremioBehaviorHints? = null,
+    )
+
+    data class StremioSubtitle(
+        val url: String? = null,
+        val lang: String? = null,
+    )
+
+    data class StremioBehaviorHints(
+        val proxyHeaders: StremioProxyHeaders? = null,
+        val headers: Map<String, String>? = null,
+    )
+
+    data class StremioProxyHeaders(
+        val request: Map<String, String>? = null,
+    )
+
     companion object {
         private const val tmdbApi = "https://api.themoviedb.org/3"
         private const val videasyApi = "https://api.videasy.net"
@@ -803,6 +932,10 @@ open class TmdbCatalogProvider(
         private const val xpassApi = "https://play.xpass.top"
         private const val projectFreeTvApi = "https://projectfreetv.sx"
         private const val decryptApi = "https://enc-dec.app/api"
+        private val stremioHttpsAddons = listOf(
+            "Streamvix" to "https://streamvix.hayd.uk",
+            "NoTorrent" to "https://addon-osvh.onrender.com",
+        )
         private const val tmdbReadToken =
             "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1YjEwYWNhZDFhNjY3ZTQwMDEyMGVjMTc1ZDBjZTFmZCIsIm5iZiI6MTcyNDk1Mjg3MC45NDA4NDcsInN1YiI6IjY2ZDBhOTgyODQ1OWYzM2FmMjBmYjdkNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ScGHs1VZTLGpUKWPG7EA-2T29OPcqW_qpJjKL5Yhrjc"
         private val videasyMovieServers = listOf(
