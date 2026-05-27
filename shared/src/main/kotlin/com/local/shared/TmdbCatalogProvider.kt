@@ -139,6 +139,7 @@ open class TmdbCatalogProvider(
         if (invokeVidlink(streamData, callback)) found = true
         if (invokeXpass(streamData, callback)) found = true
         if (invokeStremioHttps(streamData, subtitleCallback, callback)) found = true
+        if (invokeDahmerMovies(streamData, callback)) found = true
         if (invokeAutoembed(streamData, subtitleCallback, callback)) found = true
         if (invokeProjectFreeTv(streamData, subtitleCallback, callback)) found = true
         if (!found && invokeVidFastPro(streamData, subtitleCallback, callback)) found = true
@@ -525,6 +526,73 @@ open class TmdbCatalogProvider(
         return found
     }
 
+    private suspend fun invokeDahmerMovies(
+        data: TmdbStreamData,
+        callback: (ExtractorLink) -> Unit,
+    ): Boolean {
+        val title = data.title?.takeIf { it.isNotBlank() } ?: return false
+        val cleanTitle = title.replace(":", "").trim()
+        val pageUrl = if (data.season == null) {
+            val folder = if (data.year == null) cleanTitle else "$cleanTitle (${data.year})"
+            "$dahmerMoviesApi/movies/${folder.urlEncode()}/"
+        } else {
+            "$dahmerMoviesApi/tvs/${cleanTitle.replace(":", " -").urlEncode()}/Season%20${data.season}/"
+        }
+
+        val links = runCatching {
+            app.get(pageUrl, timeout = 18_000L)
+                .document
+                .select("a")
+                .mapNotNull { anchor ->
+                    val label = anchor.text().trim()
+                    val href = anchor.attr("href").takeIf { it.isNotBlank() } ?: return@mapNotNull null
+                    label to href.toDahmerUrl()
+                }
+        }.getOrDefault(emptyList())
+
+        val episodePattern = if (data.season != null && data.episode != null) {
+            Regex("S0?${data.season}E0?${data.episode}", RegexOption.IGNORE_CASE)
+        } else {
+            null
+        }
+        val headers = mapOf(
+            "User-Agent" to USER_AGENT,
+            "Referer" to "$dahmerMoviesApi/",
+            "Range" to "bytes=0-",
+        )
+
+        var found = false
+        links
+            .asSequence()
+            .filter { (label, url) ->
+                url.hasDirectVideoExtension() &&
+                    if (episodePattern == null) {
+                        label.contains(Regex("(?i)(720p|1080p|2160p|4k|remux|bluray|web)"))
+                    } else {
+                        episodePattern.containsMatchIn(label)
+                    }
+            }
+            .distinctBy { it.second }
+            .take(24)
+            .forEach { (label, url) ->
+                callback(
+                    newExtractorLink(
+                        source = "$siteTitle DahmerMovies",
+                        name = "$siteTitle DahmerMovies $label".trim(),
+                        url = url,
+                        type = url.toExtractorType()
+                    ) {
+                        this.headers = headers
+                        quality = getQualityFromName(label).takeIf { it != Qualities.Unknown.value }
+                            ?: Qualities.Unknown.value
+                    }
+                )
+                found = true
+            }
+
+        return found
+    }
+
     private suspend fun invokeProjectFreeTv(
         data: TmdbStreamData,
         subtitleCallback: (SubtitleFile) -> Unit,
@@ -707,6 +775,21 @@ open class TmdbCatalogProvider(
             contains(".mpd", ignoreCase = true) -> ExtractorLinkType.DASH
             contains(".mp4", ignoreCase = true) || contains(".mkv", ignoreCase = true) -> ExtractorLinkType.VIDEO
             else -> ExtractorLinkType.VIDEO
+        }
+    }
+
+    private fun String.hasDirectVideoExtension(): Boolean {
+        val cleanUrl = substringBefore("?").lowercase()
+        return cleanUrl.endsWith(".mp4") ||
+            cleanUrl.endsWith(".mkv") ||
+            cleanUrl.endsWith(".m3u8")
+    }
+
+    private fun String.toDahmerUrl(): String {
+        return when {
+            startsWith("http", true) -> this
+            startsWith("/") -> "$dahmerMoviesApi$this"
+            else -> "$dahmerMoviesApi/$this"
         }
     }
 
@@ -931,6 +1014,7 @@ open class TmdbCatalogProvider(
         private const val autoembedApi = "https://player.autoembed.app"
         private const val xpassApi = "https://play.xpass.top"
         private const val projectFreeTvApi = "https://projectfreetv.sx"
+        private const val dahmerMoviesApi = "https://a.111477.xyz"
         private const val decryptApi = "https://enc-dec.app/api"
         private val stremioHttpsAddons = listOf(
             "Streamvix" to "https://streamvix.hayd.uk",
