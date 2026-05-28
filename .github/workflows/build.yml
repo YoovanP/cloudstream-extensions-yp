@@ -74,7 +74,25 @@ jobs:
           git add .
           if [ -n "$(git status --short)" ]; then
             git commit -m "Build $GITHUB_SHA"
-            git push origin builds --force
+            for attempt in 1 2 3 4 5; do
+              if git -c http.version=HTTP/1.1 push origin HEAD:builds --force; then
+                exit 0
+              fi
+
+              remote_sha="$(git ls-remote origin refs/heads/builds | cut -f1 || true)"
+              local_sha="$(git rev-parse HEAD)"
+              if [ "$remote_sha" = "$local_sha" ]; then
+                echo "Build artifacts were published despite a push transport error."
+                exit 0
+              fi
+
+              if [ "$attempt" -eq 5 ]; then
+                echo "Failed to publish build artifacts after $attempt attempts."
+                exit 1
+              fi
+
+              sleep "$((attempt * 15))"
+            done
           else
             echo "No changes to publish"
           fi
